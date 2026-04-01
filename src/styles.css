@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+body {
+  @apply bg-gray-50 text-gray-800 font-sans;
+  scroll-behavior: smooth; /* smooth scrolling */
+}
+
+/* Optional: small animation tweaks */
+.animate-slide-right {
+  animation: slideRight 1s ease forwards;
+}
+@keyframes slideRight {
+  0% { opacity: 0; transform: translateX(50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-left {
+  animation: slideLeft 1s ease forwards;
+}
+@keyframes slideLeft {
+  0% { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+  0% { background-position: 0% }
+  50% { background-position: 100% }
+  100% { background-position: 0% }
+}
+
+.animate-gradient {
+  animation: gradientMove 6s linear infinite;
+}
+
+/* Shimmer Sweep */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
+}
+
+.group-hover\:animate-shimmer:hover {
+  animation: shimmer 1.2s ease forwards;
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
