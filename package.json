@@ -9,10 +9,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "chmod +x node_modules/.bin/vite && vite build",
     "preview": "vite preview",
     "lint": "eslint",
-    "prebuild": "chmod +x node_modules/.bin/vite"
+    "prebuild": "chmod +x node_modules/.bin/vite",
+    "vercel-build": "npm ci && npm run build"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
