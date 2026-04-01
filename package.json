@@ -1,16 +1,17 @@
 {
-  "homepage": "https://github.com/MalairamanC/Jaswisys-Project.git",
   "name": "jaswisys",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "20.x",
+    "npm": "9.x"
+  },
   "scripts": {
-    "predeploy":"npm run build",
-    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
