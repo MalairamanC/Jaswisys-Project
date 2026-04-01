@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "chmod +x node_modules/.bin/vite && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint",
     "prebuild": "chmod +x node_modules/.bin/vite",
