@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import logo from "../assets/logo1.0.png";
 import arrow_icon from "../assets/arrow_icon.png";
-import navbarVideo from "../assets/navbarVideo1.mp4"; // Background video
+import NavbarVideo from "../assets/NavbarVideo1.mp4"; // Background video
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,7 +50,7 @@ function Navbar() {
         muted
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={navbarVideo} type="video/mp4" />
+        <source src={NavbarVideo} type="video/mp4" />
       </video>
 
       {/* Overlay for readability */}
