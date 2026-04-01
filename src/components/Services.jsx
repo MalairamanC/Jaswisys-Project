@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import servicesVideo from "../assets/servicesBg.mp4";
+import ServicesVideo from "../assets/ServicesBg.mp4";
 import supportImg from "../assets/support.png";
 import consultingImg from "../assets/consulting.png";
 import outsourcingImg from "../assets/outsourcing.png";
@@ -70,7 +70,7 @@ function Services() {
         muted
         playsInline
       >
-        <source src={servicesVideo} type="video/mp4" />
+        <source src={ServicesVideo} type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-black/70"></div>
 
