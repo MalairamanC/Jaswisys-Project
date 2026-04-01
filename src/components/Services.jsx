@@ -19,7 +19,7 @@ const services = [
   {
     title: "Consulting",
     description:
-      "We deliver expert consulting in recruitment and HR processes, alongside optimizing IT, finance, and BPO operations, enabling organizations to improve efficiency, reduce costs, and accelerate business growth.",
+      "Jaswisys deliver expert consulting in recruitment and HR processes, alongside optimizing IT, finance, and BPO operations, enabling organizations to improve efficiency, reduce costs, and accelerate business growth.",
     fullInfo:
       "We help organizations improve recruitment processes across IT, BPO, Finance and HR sectors Contract to Hire (C2H) services, One time Placement services, Part-time fulfillment (hourly basis), and Work-package model provide expert guidance on recruitment.",
     image: consultingImg,
