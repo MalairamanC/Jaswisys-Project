@@ -11,7 +11,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint",
+    "prebuild": "chmod +x node_modules/.bin/vite"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
