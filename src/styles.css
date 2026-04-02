@@ -1,61 +1,157 @@
+/* ============================================
+   Fonts (MUST be first)
+============================================ */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
 
-
+/* ============================================
+   Tailwind Base
+============================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom global styles */
-body {
-  @apply bg-gray-50 text-gray-800 font-sans;
-  scroll-behavior: smooth; /* smooth scrolling */
+/* ============================================
+   Base Layer
+============================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-black text-gray-100 font-sans;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-purple-500;
+  }
+
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  ::selection {
+    @apply bg-purple-600 text-white;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
 }
 
-/* Optional: small animation tweaks */
-.animate-slide-right {
-  animation: slideRight 1s ease forwards;
-}
-@keyframes slideRight {
-  0% { opacity: 0; transform: translateX(50px); }
-  100% { opacity: 1; transform: translateX(0); }
+/* ============================================
+   Components
+============================================ */
+@layer components {
+  /* Glass */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-gray-900/80 backdrop-blur-md border border-gray-700;
+  }
+
+  /* Gradient */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply btn gradient-bg text-white hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-800 text-white hover:bg-gray-700 border border-gray-700;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-gray-900 rounded-xl p-6 border border-gray-800;
+  }
+
+  .card-hover {
+    @apply card hover:border-gray-700 hover:shadow-lg;
+  }
+
+  /* Input */
+  .input-base {
+    @apply px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white;
+  }
+
+  .input-base:focus {
+    @apply border-purple-500 ring-2 ring-purple-500/30 outline-none;
+  }
 }
 
-.animate-slide-left {
-  animation: slideLeft 1s ease forwards;
-}
-@keyframes slideLeft {
-  0% { opacity: 0; transform: translateX(-50px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-/* Gradient Animation */
-@keyframes gradientMove {
-  0% { background-position: 0% }
-  50% { background-position: 100% }
-  100% { background-position: 0% }
-}
-
-.animate-gradient {
-  animation: gradientMove 6s linear infinite;
-}
-
-/* Shimmer Sweep */
-@keyframes shimmer {
-  0% { transform: translateX(-100%) skewX(-20deg); }
-  100% { transform: translateX(100%) skewX(-20deg); }
-}
-
-.group-hover\:animate-shimmer:hover {
-  animation: shimmer 1.2s ease forwards;
-}
-
-@keyframes gradient-x {
+/* ============================================
+   Animations
+============================================ */
+@keyframes gradientX {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
 .animate-gradient-x {
   background-size: 200% 200%;
-  animation: gradient-x 3s ease infinite;
+  animation: gradientX 4s ease infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ============================================
+   Utilities
+============================================ */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.text-gradient {
+  @apply gradient-text;
+}
+
+/* ✅ FIXED sr-only (NO clip error) */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+.not-sr-only {
+  @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal;
+  clip: auto;
+}
+
+/* ============================================
+   Scrollbar
+============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-purple-600 rounded-full;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
 }
