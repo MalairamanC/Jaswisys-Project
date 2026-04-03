@@ -14,7 +14,6 @@ export default function App() {
       <Navbar />
 
       {/* Hero Section with Video */}
-      <main className="pt-20">
         <section id="Home">
           <Hero />
         </section>
