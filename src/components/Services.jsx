@@ -31,9 +31,9 @@ const services = [
     description:
       "We provide flexible staffing, SAP consultancy, IT outsourcing solutions, and end-to-end startup support, enabling businesses to scale efficiently and adapt to evolving market demands.",
     fullInfo:
-      "We specialize in sourcing top-tier IT professionals for staff augmentation, training, and project-based engagements. Our flexible resourcing models, including hybrid teams, ensure you have the right talent at the right time to meet your business needs.In addition, we provide business process consulting services that help organizations analyze, streamline, and transform their operations. Our goal is to reduce costs, improve efficiency, and enhance the overall experience for both employees and customers.",
+      "We specialize in sourcing top-tier IT professionals for staff augmentation, training, and project-based engagements. Our flexible resourcing models, including hybrid teams, ensure you have the right talent at the right time to meet your business needs. In addition, we provide business process consulting services that help organizations analyze, streamline, and transform their operations. Our goal is to reduce costs, improve efficiency, and enhance the overall experience for both employees and customers.",
     image: outsourcingImg,
-    shape: "blob",
+    shape: "hexagon", // static hexagon
     gradient: "from-yellow-400 via-orange-500 to-red-600",
   },
   {
@@ -111,10 +111,10 @@ function Services() {
                       ? "square-animated-outline"
                       : service.shape === "diamond"
                       ? "diamond-animated-outline"
-                      : "blob-animated-outline"
+                      : "hexagon-animated-outline" // static hexagon outline
                   }`}
                 >
-                  {/* Glow */}
+                  {/* Glow / Background */}
                   <div
                     className={`absolute inset-0 ${
                       service.shape === "circle"
@@ -123,7 +123,7 @@ function Services() {
                         ? "rounded-lg animate-glow"
                         : service.shape === "diamond"
                         ? "rotate-45 animate-glow"
-                        : "blob-shape animate-blob"
+                        : "hexagon-shape" // static, no animation
                     } blur-2xl opacity-40 bg-gradient-to-r ${service.gradient}`}
                   ></div>
 
@@ -136,7 +136,7 @@ function Services() {
                         ? "rounded-lg"
                         : service.shape === "diamond"
                         ? "rotate-45 overflow-hidden"
-                        : "blob-shape animate-blob"
+                        : "hexagon-shape" // static hexagon
                     }`}
                   >
                     <img
@@ -161,7 +161,7 @@ function Services() {
                     </p>
                   </div>
 
-                  {/* Read More Button */}
+                  {/* Read More Button — now visible for all cards including Outsourcing */}
                   <button
                     onClick={() => setActiveModal(i)}
                     className={`mt-4 relative px-6 py-2 rounded-full font-semibold text-white border-2 border-transparent group overflow-hidden transition-all duration-300`}
@@ -181,7 +181,6 @@ function Services() {
       {/* Full-Screen Modal */}
       {activeModal !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Video background */}
           <video
             className="absolute inset-0 w-full h-full object-cover"
             autoPlay
@@ -189,11 +188,10 @@ function Services() {
             muted
             playsInline
           >
-            <source src={servicesVideo} type="video/mp4" />
+            <source src={ServicesVideo} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-black/70"></div>
 
-          {/* Modal content */}
           <div className="relative z-10 bg-gray-900 p-12 rounded-3xl max-w-4xl w-full mx-4 overflow-y-auto max-h-[90vh] transform scale-90 opacity-0 animate-fade-in-scale">
             <button
               className="absolute top-4 right-4 text-white text-2xl font-bold"
@@ -208,7 +206,6 @@ function Services() {
               {services[activeModal].fullInfo}
             </p>
 
-            {/* Enquire Now Button - centered and with same service gradient */}
             <div className="flex justify-center mt-8">
               <a
                 href="mailto:info@jaswisys.com"
