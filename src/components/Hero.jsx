@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import heroVideo from "../assets/Video1.mp4";
 
@@ -18,21 +18,7 @@ function Hero() {
   const glowTopRef = useRef(null);
   const glowBottomRef = useRef(null);
   const rafRef = useRef(null);
-  const [isVideoVisible, setIsVideoVisible] = useState(false);
 
-  // Lazy-load video when hero is in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVideoVisible(entry.isIntersecting),
-      { threshold: 0.25 }
-    );
-
-    if (videoRef.current) observer.observe(videoRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Parallax scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -40,13 +26,13 @@ function Hero() {
         const y = window.scrollY;
 
         if (videoRef.current) {
-          videoRef.current.style.transform = `translate3d(0, ${y * 0.12}px, 0)`; // slightly smaller for mobile
+          videoRef.current.style.transform = `translate3d(0, ${y * 0.15}px, 0)`;
         }
         if (glowTopRef.current) {
-          glowTopRef.current.style.transform = `translate3d(0, ${y * 0.2}px, 0)`;
+          glowTopRef.current.style.transform = `translate3d(0, ${y * 0.25}px, 0)`;
         }
         if (glowBottomRef.current) {
-          glowBottomRef.current.style.transform = `translate3d(0, ${y * -0.2}px, 0)`;
+          glowBottomRef.current.style.transform = `translate3d(0, ${y * -0.25}px, 0)`;
         }
       });
     };
@@ -79,22 +65,19 @@ function Hero() {
       role="region"
     >
       {/* Background Video */}
-      {isVideoVisible && (
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/placeholder.jpg"
-          className="absolute inset-0 w-full h-full object-cover brightness-110 contrast-110"
-          style={{ willChange: "transform" }}
-          aria-hidden="true"
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-      )}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover brightness-110 contrast-110"
+        style={{ willChange: "transform" }}
+        aria-hidden="true"
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
 
       {/* Gradient Overlay */}
       <div
@@ -105,13 +88,13 @@ function Hero() {
       {/* Parallax Glow Circles */}
       <div
         ref={glowTopRef}
-        className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-purple-500/30 blur-3xl rounded-full top-10 left-[-100px]"
+        className="absolute w-[500px] h-[500px] bg-purple-500/30 blur-3xl rounded-full top-10 left-[-100px]"
         style={{ willChange: "transform" }}
         aria-hidden="true"
       />
       <div
         ref={glowBottomRef}
-        className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/30 blur-3xl rounded-full bottom-10 right-[-100px]"
+        className="absolute w-[500px] h-[500px] bg-blue-500/30 blur-3xl rounded-full bottom-10 right-[-100px]"
         style={{ willChange: "transform" }}
         aria-hidden="true"
       />
@@ -123,10 +106,9 @@ function Hero() {
         animate="show"
         className="relative z-10 text-center max-w-5xl"
       >
-        {/* Top Badge */}
+        {/* 🎯 Top Badge — Subtle Gradient Border */}
         <motion.div
           variants={item}
-          role="presentation"
           className="inline-flex items-center gap-2 mb-6 px-6 py-2 text-sm rounded-xl
                      border border-transparent
                      bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),linear-gradient(to_right,#a855f7,#ec4899,#3b82f6)]
@@ -158,7 +140,7 @@ function Hero() {
         {/* Heading */}
         <motion.h1
           variants={item}
-          className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-white mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-white mb-6"
         >
           Build Your Business with{" "}
           <span className="bg-gradient-to-r from-green-400 via-teal-400 to-blue-500 text-transparent bg-clip-text">
@@ -168,20 +150,19 @@ function Hero() {
 
         {/* Subheading */}
         <motion.div
-          variants={item}
-          className="inline-block mb-8 px-6 py-3 text-base md:text-lg rounded-xl border-[2px] border-white/5 bg-clip-text text-transparent bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC05] animate-gradient-x"
-        >
-          We deliver top-notch IT software services, backed by experienced professionals, to help businesses thrive.
+         variants={item}
+         className="inline-block mb-8 px-6 py-3 text-base md:text-lg rounded-xl border-[2px] border-white/5 bg-clip-text text-transparent bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC05] animate-gradient-x"
+       >
+         We deliver top-notch IT software services, backed by experienced professionals, to help businesses thrive.
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* 🚀 CTA Buttons — Clean (No Gradient) */}
         <motion.div
           variants={item}
           className="mt-6 flex flex-col sm:flex-row justify-center gap-4"
         >
           <button
             onClick={handleScrollToServices}
-            aria-label="Scroll to services section"
             className="px-6 py-3 rounded-lg bg-black/10 backdrop-blur-md 
                        border border-white/20 text-white font-medium
                        hover:bg-white/10 hover:border-white/30 
@@ -193,7 +174,6 @@ function Hero() {
 
           <button
             onClick={handleContactClick}
-            aria-label="Contact us via section or email"
             className="px-6 py-3 rounded-lg bg-black/10 backdrop-blur-md 
                        border border-white/20 text-white font-medium
                        hover:bg-white/10 hover:border-white/30 
