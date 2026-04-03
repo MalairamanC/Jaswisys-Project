@@ -1,54 +1,75 @@
-import Navbar from "./components/Navbar.jsx";
-import Hero from "./components/Hero.jsx";
-import Features from "./components/Features.jsx";
-import About from "./components/About.jsx";
-import Services from "./components/Services.jsx";
-import Careers from "./components/Careers.jsx";
-import Contact from "./components/Contact.jsx";
-import Footer from "./components/Footer.jsx";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import About from "./components/About";
+import Services from "./components/Services";
+import Careers from "./components/Careers";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+
+// Reusable section component for consistency
+const AppSection = ({ id, children, className = "" }) => (
+  <section
+    id={id}
+    className={className}
+    role="region"
+    aria-labelledby={`heading-${id}`}
+  >
+    {children}
+  </section>
+);
 
 export default function App() {
   return (
-    <div className="relative">
-      {/* Navbar */}
+    <div className="relative min-h-screen bg-black">
+      {/* Navigation */}
       <Navbar />
 
-      {/* Hero Section with Video */}
-        <section id="Home">
+      {/* Main Content */}
+      <main className="pt-0 sm:pt-0">
+        {/* Hero Section */}
+        <AppSection id="Home">
           <Hero />
-        </section>
+        </AppSection>
 
-       {/* Features Section */}
-        <section id="Features">
+        {/* Features Section */}
+        <AppSection id="Features">
           <Features />
-        </section>
+        </AppSection>
 
         {/* About Section */}
-        <section id="About">
+        <AppSection id="About">
           <About />
-        </section>  
+        </AppSection>
 
         {/* Services Section */}
-        <section id="Services">
-          <Services/>
-        </section>
+        <AppSection id="Services">
+          <Services />
+        </AppSection>
 
         {/* Careers Section */}
-        <section id="Careers">
-          <Careers/>
-        </section>
+        <AppSection id="Careers">
+          <Careers />
+        </AppSection>
 
         {/* Contact Section */}
-        <section id="Contact">
-          <Contact/>
-        </section>
+        <AppSection id="Contact">
+          <Contact />
+        </AppSection>
 
         {/* Footer Section */}
-        <section id="Footer">
-          <Footer/>
-        </section>
-      
+        <AppSection id="Footer">
+          <Footer />
+        </AppSection>
       </main>
+
+      {/* Skip to Content Link for Accessibility */}
+      <a
+        href="#Home"
+        className="sr-only focus:not-sr-only fixed top-2 left-2 z-50 bg-purple-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-white"
+      >
+        Skip to main content
+      </a>
     </div>
   );
 }
