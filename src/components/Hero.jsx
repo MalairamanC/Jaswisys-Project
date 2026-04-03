@@ -40,11 +40,11 @@ function Hero() {
   }, []);
 
   const handleScrollToServices = () => {
-    document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("Services")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleContactClick = () => {
-    const section = document.getElementById("contact");
+    const section = document.getElementById("Contact");
     if (section) section.scrollIntoView({ behavior: "smooth" });
     else window.location.href = "mailto:contact@jaswisys.com";
   };
@@ -100,7 +100,7 @@ function Hero() {
         {/* Top Badge */}
         <motion.div
           variants={item}
-          className="inline-flex items-center gap-2 mb-6 px-6 py-2 text-sm rounded-xl
+          className="inline-flex items-center gap-3 mb-12 px-6 py-2 text-sm rounded-xl
                      border border-transparent
                      bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),linear-gradient(to_right,#a855f7,#ec4899,#3b82f6)]
                      bg-origin-border bg-clip-padding bg-clip-border"
@@ -136,7 +136,7 @@ function Hero() {
         </motion.div>
 
         {/* CTA Buttons */}
-        <motion.div variants={item} className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+        <motion.div variants={item} className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
           <button
             onClick={handleScrollToServices}
             className="px-6 py-3 rounded-lg bg-black/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 active:scale-95 transition duration-300"
