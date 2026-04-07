@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import emailjs from "@emailjs/browser";
+import emailjs from "emailjs-com";
 
 // ——— Replace these with your real EmailJS details ———
 const SERVICE_ID  = "service_2rb4as7";    // your EmailJS Service ID
