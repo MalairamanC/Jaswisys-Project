@@ -4,16 +4,19 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": "20.x",
-    "npm": "9.x"
+    "node": "^24.0.0",
+    "npm": "10.8.2"
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "chmod +x node_modules/.bin/vite && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "prebuild": "chmod +x node_modules/.bin/vite",
+    "vercel-build": "npm ci && npm run build"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@heroicons/react": "^2.2.0",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.38.0",
