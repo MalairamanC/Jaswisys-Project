@@ -3,11 +3,11 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
-// Replace these with your EmailJS info
-const SERVICE_ID = "service_2rb4as7";     // EmailJS Service ID
-const TEMPLATE_ID = "template_8yh5o45";   // EmailJS Template ID
-const PUBLIC_KEY = "vxgoAdH_AIciY17rZ";     // EmailJS Public Key
-const TO_EMAIL = "jaswisys@gmail.com"; // The email to receive messages
+// ——— Replace these with your real EmailJS details ———
+const SERVICE_ID  = "service_2rb4as7";    // your EmailJS Service ID
+const TEMPLATE_ID = "template_8yh5o45";   // your EmailJS Template ID
+const PUBLIC_KEY  = "vxgoAdH_AIciY17rZ";       // your EmailJS Public Key
+const TO_EMAIL    = "youremail@example.com"; // where you want to receive messages
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -37,25 +37,27 @@ function Contact() {
 
     setLoading(true);
 
-    emailjs
-      .send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          to_email: TO_EMAIL,   // the receiver email
-          message: formData.message,
-        },
-        PUBLIC_KEY
-      )
-      .then(() => {
-        setSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
-        setTimeout(() => setSubmitted(false), 4000);
-      })
-      .catch(() => setError("Failed to send message. Please try again."))
-      .finally(() => setLoading(false));
+    emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        to_email: TO_EMAIL,
+        message: formData.message,
+      },
+      PUBLIC_KEY
+    )
+    .then(() => {
+      setSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setSubmitted(false), 4000);
+    })
+    .catch((err) => {
+      console.error("EmailJS error:", err);
+      setError("Failed to send message. Please try again.");
+    })
+    .finally(() => setLoading(false));
   };
 
   return (
@@ -80,23 +82,28 @@ function Contact() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-10 relative z-10">
+            {/* Left Info */}
             <div className="text-white space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="text-purple-400" size={22} />
-                  <a href={`mailto:${TO_EMAIL}`} className="hover:text-purple-400">{TO_EMAIL}</a>
+                  <a href={`mailto:${TO_EMAIL}`} className="hover:text-purple-400">
+                    {TO_EMAIL}
+                  </a>
                 </div>
-
                 <div className="flex items-center gap-3">
                   <Phone className="text-purple-400" size={22} />
-                  <a href="tel:+919566862233" className="hover:text-purple-400">+91 9566862233</a>
+                  <a href="tel:+919566862233" className="hover:text-purple-400">
+                    +91 9566862233
+                  </a>
                 </div>
-
                 <div className="flex items-start gap-3">
                   <MapPin className="text-purple-400 mt-1" size={22} />
                   <div>
                     <p className="font-semibold">Jaswisys Technologies</p>
-                    <p className="text-gray-400 text-sm">No.1/4/2, RS Towers, 2nd Floor, New Natham Highway, Oomachikulam, Madurai, Tamil Nadu, India</p>
+                    <p className="text-gray-400 text-sm">
+                      No.1/4/2, RS Towers, 2nd Floor, New Natham Highway, Oomachikulam, Madurai, Tamil Nadu, India
+                    </p>
                   </div>
                 </div>
               </div>
@@ -113,6 +120,7 @@ function Contact() {
               </div>
             </div>
 
+            {/* Right Form */}
             <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
               <input
                 type="text"
@@ -122,7 +130,6 @@ function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 disabled={loading}
-                aria-required="true"
               />
               <input
                 type="email"
@@ -132,7 +139,6 @@ function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 disabled={loading}
-                aria-required="true"
               />
               <textarea
                 rows="4"
@@ -142,16 +148,50 @@ function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 disabled={loading}
-                aria-required="true"
               />
 
               <AnimatePresence>
-                {error && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-red-400 text-center">{error}</motion.p>}
-                {submitted && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-green-400 text-center font-semibold">Message sent successfully!</motion.p>}
-                {loading && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-blue-400 text-center">Sending...</motion.p>}
+                {error && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-center"
+                  >
+                    {error}
+                  </motion.p>
+                )}
+                {submitted && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-green-400 text-center font-semibold"
+                  >
+                    Message sent successfully!
+                  </motion.p>
+                )}
+                {loading && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-blue-400 text-center"
+                  >
+                    Sending...
+                  </motion.p>
+                )}
               </AnimatePresence>
 
-              <button type="submit" disabled={loading} className={`w-full py-3 rounded-lg font-semibold text-white transition ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"}`} aria-label="Send contact message">
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-3 rounded-lg font-semibold text-white ${
+                  loading
+                    ? "bg-gray-600 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                }`}
+              >
                 {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
