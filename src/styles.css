@@ -115,50 +115,5 @@
 
 .animate-gradient-x {
   background-size: 200% 200%;
-  animation: gradientX 4s ease infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* ============================================
-   Utilities
-============================================ */
-.flex-center {
-  @apply flex items-center justify-center;
-}
-
-.text-gradient {
-  @apply gradient-text;
-}
-
-/* ✅ FIXED sr-only (NO clip error) */
-.sr-only {
-  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-  clip: rect(0, 0, 0, 0);
-}
-
-.not-sr-only {
-  @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal;
-  clip: auto;
-}
-
-/* ============================================
-   Scrollbar
-============================================ */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-purple-600 rounded-full;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-900;
-}
-
-section {
-  scroll-margin-top: 80px;
+  animation: gradient-x 3s ease infinite;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import emailjs from "@emailjs/browser";
+import emailjs from "emailjs-com";
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -39,16 +39,15 @@ function Contact() {
 
     emailjs
       .send(
-        SERVICE_ID,
-        TEMPLATE_ID,
+        process.env.REACT_APP_SERVICE_ID,
+        process.env.REACT_APP_TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           reply_to: formData.email,
-          to_email: TO_EMAIL,
         },
-        PUBLIC_KEY
+        process.env.REACT_APP_PUBLIC_KEY
       )
       .then(() => {
         setSubmitted(true);
@@ -81,15 +80,19 @@ function Contact() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-10 relative z-10">
+
+            {/* Left - Contact Info + Map */}
             <div className="text-white space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="text-purple-400" size={22} />
-                  <a href={`mailto:${TO_EMAIL}`} className="hover:text-purple-400">{TO_EMAIL}</a>
+                  <a href="mailto:info@jaswisys.com" className="hover:text-purple-400">info@jaswisys.com</a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="text-purple-400" size={22} />
-                  <a href="tel:+919566862233" className="hover:text-purple-400">+91 9566862233</a>
+                  <a href="tel:+919566862233" className="hover:text-purple-400">
+                    +91 9566862233
+                  </a>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="text-purple-400 mt-1" size={22} />
@@ -114,10 +117,38 @@ function Contact() {
               </div>
             </div>
 
+            {/* Right - Form */}
             <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-              <input type="text" name="name" placeholder="Your Name" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.name} onChange={handleChange} disabled={loading} aria-required="true" />
-              <input type="email" name="email" placeholder="Your Email" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.email} onChange={handleChange} disabled={loading} aria-required="true" />
-              <textarea rows="4" name="message" placeholder="Your Message" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.message} onChange={handleChange} disabled={loading} aria-required="true" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
+              <textarea
+                rows="4"
+                name="message"
+                placeholder="Your Message"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.message}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
 
               <AnimatePresence>
                 {error && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-red-400 text-center">{error}</motion.p>}
@@ -125,7 +156,14 @@ function Contact() {
                 {loading && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-blue-400 text-center">Sending...</motion.p>}
               </AnimatePresence>
 
-              <button type="submit" disabled={loading} className={`w-full py-3 rounded-lg font-semibold text-white transition ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"}`} aria-label="Send contact message">
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-3 rounded-lg font-semibold text-white transition ${
+                  loading ? "bg-gray-600 cursor-not-allowed" : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                }`}
+                aria-label="Send contact message"
+              >
                 {loading ? "Sending..." : "Send Message"}
               </button>
             </form>

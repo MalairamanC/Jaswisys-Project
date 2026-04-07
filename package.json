@@ -11,14 +11,12 @@
     "dev": "vite",
     "build": "chmod +x node_modules/.bin/vite && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "prebuild": "chmod +x node_modules/.bin/vite",
-    "vercel-build": "npm ci && npm run build"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@heroicons/react": "^2.2.0",
-    "emailjs-com": "^3.2.0",
+    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^12.38.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.577.0",

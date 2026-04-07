@@ -19,9 +19,9 @@ const services = [
   {
     title: "Consulting",
     description:
-      "Jaswisys delivers expert consulting in recruitment and HR, while optimizing IT, finance, and BPO operations, providing tailored solutions that streamline workflows, boost efficiency, reduce costs, and drive sustainable business growth.",
+      "We deliver expert consulting in recruitment and HR processes, alongside optimizing IT, finance, and BPO operations, enabling organizations to improve efficiency, reduce costs, and accelerate business growth.",
     fullInfo:
-      "We help organizations improve recruitment processes across IT, BPO, Finance and HR sectors Contract to Hire (C2H) services, One time Placement services, Part-time fulfillment (hourly basis), and Work-package model provide expert guidance on recruitment.",
+      "Jaswisys help organizations improve recruitment processes across IT, BPO, Finance and HR sectors Contract to Hire (C2H) services, One time Placement services, Part-time fulfillment (hourly basis), and Work-package model provide expert guidance on recruitment.",
     image: consultingImg,
     shape: "square",
     gradient: "from-green-400 via-teal-500 to-blue-600",
@@ -31,7 +31,7 @@ const services = [
     description:
       "We provide flexible staffing, SAP consultancy, IT outsourcing solutions, and end-to-end startup support, enabling businesses to scale efficiently and adapt to evolving market demands.",
     fullInfo:
-      "We specialize in sourcing top-tier IT professionals for staff augmentation, training, and project-based engagements. Our flexible resourcing models, including hybrid teams, ensure you have the right talent at the right time to meet your business needs. In addition, we provide business process consulting services that help organizations analyze, streamline, and transform their operations. Our goal is to reduce costs, improve efficiency, and enhance the overall experience for both employees and customers.",
+      "We specialize in sourcing top-tier IT professionals for staff augmentation, training, and project-based engagements. Our flexible resourcing models, including hybrid teams, ensure you have the right talent at the right time to meet your business needs.In addition, we provide business process consulting services that help organizations analyze, streamline, and transform their operations. Our goal is to reduce costs, improve efficiency, and enhance the overall experience for both employees and customers.",
     image: outsourcingImg,
     shape: "hexagon", // static hexagon
     gradient: "from-yellow-400 via-orange-500 to-red-600",
