@@ -3,17 +3,17 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
+// Replace these with your EmailJS info
+const SERVICE_ID = "service_2rb4as7";     // EmailJS Service ID
+const TEMPLATE_ID = "template_8yh5o45";   // EmailJS Template ID
+const PUBLIC_KEY = "vxgoAdH_AIciY17rZ";     // EmailJS Public Key
+const TO_EMAIL = "jaswisys@gmail.com"; // The email to receive messages
+
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Replace these with your actual EmailJS info
-  const SERVICE_ID = "service_2rb4as7";
-  const TEMPLATE_ID = "template_8yh5o45";
-  const PUBLIC_KEY = "vxgoAdH_AIciY17rZ";
-  const TO_EMAIL = "jaswisys@gmail.com";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,9 +44,8 @@ function Contact() {
         {
           from_name: formData.name,
           from_email: formData.email,
+          to_email: TO_EMAIL,   // the receiver email
           message: formData.message,
-          reply_to: formData.email,
-          to_email: TO_EMAIL,
         },
         PUBLIC_KEY
       )
@@ -87,17 +86,17 @@ function Contact() {
                   <Mail className="text-purple-400" size={22} />
                   <a href={`mailto:${TO_EMAIL}`} className="hover:text-purple-400">{TO_EMAIL}</a>
                 </div>
+
                 <div className="flex items-center gap-3">
                   <Phone className="text-purple-400" size={22} />
                   <a href="tel:+919566862233" className="hover:text-purple-400">+91 9566862233</a>
                 </div>
+
                 <div className="flex items-start gap-3">
                   <MapPin className="text-purple-400 mt-1" size={22} />
                   <div>
                     <p className="font-semibold">Jaswisys Technologies</p>
-                    <p className="text-gray-400 text-sm">
-                      No.1/4/2, RS Towers, 2nd Floor, New Natham Highway, Oomachikulam, Madurai, Tamil Nadu, India
-                    </p>
+                    <p className="text-gray-400 text-sm">No.1/4/2, RS Towers, 2nd Floor, New Natham Highway, Oomachikulam, Madurai, Tamil Nadu, India</p>
                   </div>
                 </div>
               </div>
@@ -115,9 +114,36 @@ function Contact() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-              <input type="text" name="name" placeholder="Your Name" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.name} onChange={handleChange} disabled={loading} aria-required="true" />
-              <input type="email" name="email" placeholder="Your Email" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.email} onChange={handleChange} disabled={loading} aria-required="true" />
-              <textarea rows="4" name="message" placeholder="Your Message" className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white" value={formData.message} onChange={handleChange} disabled={loading} aria-required="true" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
+              <textarea
+                rows="4"
+                name="message"
+                placeholder="Your Message"
+                className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white"
+                value={formData.message}
+                onChange={handleChange}
+                disabled={loading}
+                aria-required="true"
+              />
 
               <AnimatePresence>
                 {error && <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-red-400 text-center">{error}</motion.p>}
