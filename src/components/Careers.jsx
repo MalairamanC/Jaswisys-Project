@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 const jobsData = [
   {
@@ -70,15 +70,15 @@ export default function ModernCareers() {
     // EmailJS
     emailjs
       .send(
-        "YOUR_SERVICE_ID", // Replace with your EmailJS service ID
-        "YOUR_TEMPLATE_ID", // Replace with your EmailJS template ID
+        "service_2rb4as7", // Replace with your EmailJS service ID
+        "template_8yh5o45", // Replace with your EmailJS template ID
         {
           from_name: formData.name,
           from_email: formData.email,
           job_title: selectedJob.title,
-          to_email: "career@jaswisys.com"
+          to_email: "jaswisys@gmail.com"
         },
-        "YOUR_PUBLIC_KEY" // Replace with your EmailJS public key
+        "vxgoAdH_AIciY17rZ" // Replace with your EmailJS public key
       )
       .then(() => {
         setSubmitted(true);
