@@ -39,15 +39,15 @@ function Contact() {
 
     emailjs
       .send(
-        process.env.REACT_APP_SERVICE_ID,
-        process.env.REACT_APP_TEMPLATE_ID,
+        SERVICE_ID,
+        TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           reply_to: formData.email,
         },
-        process.env.REACT_APP_PUBLIC_KEY
+        PUBLIC_KEY
       )
       .then(() => {
         setSubmitted(true);
