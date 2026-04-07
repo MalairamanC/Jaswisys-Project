@@ -7,7 +7,7 @@ import emailjs from "emailjs-com";
 const SERVICE_ID  = "service_2rb4as7";    // your EmailJS Service ID
 const TEMPLATE_ID = "template_8yh5o45";   // your EmailJS Template ID
 const PUBLIC_KEY  = "vxgoAdH_AIciY17rZ";       // your EmailJS Public Key
-const TO_EMAIL    = "youremail@example.com"; // where you want to receive messages
+const TO_EMAIL    = "jaswisys@gmail.com"; // where you want to receive messages
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
