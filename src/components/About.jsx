@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import aboutImg from "../assets/aboutbg.png";
-import servicesVideo from "../assets/About.mp4";
+import aboutImg from "../assets/aboutBg.png";
+import AboutVideo from "../assets/About.mp4";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -80,7 +80,7 @@ function About() {
             muted
             playsInline
           >
-            <source src={servicesVideo} type="video/mp4" />
+            <source src={AboutVideo} type="video/mp4" />
           </video>
 
           {/* Overlay */}
