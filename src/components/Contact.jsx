@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
