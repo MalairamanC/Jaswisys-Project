@@ -90,8 +90,8 @@ function Contact() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="text-purple-400" size={22} />
-                  <a href="tel:+919500355003" className="hover:text-purple-400">
-                    +91 9500355003
+                  <a href="tel:+919442005774" className="hover:text-purple-400">
+                    +91 9442005774
                   </a>
                 </div>
                 <div className="flex items-start gap-3">
