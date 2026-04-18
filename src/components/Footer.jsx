@@ -22,7 +22,7 @@ function Footer() {
     { icon: Twitter, url: "https://twitter.com/jaswisys", label: "Twitter" },
     { icon: Facebook, url: "https://facebook.com/jaswisys", label: "Facebook" },
     { icon: Linkedin, url: "https://linkedin.com/company/jaswisystechnologies", label: "LinkedIn" },
-    { icon: Instagram, url: "https://instagram.com/jaswisys", label: "Instagram" },
+    { icon: Instagram, url: "https://instagram.com/jaswisystechnologies", label: "Instagram" },
   ];
 
   const handleScroll = (e, href) => {
