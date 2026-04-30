@@ -13,7 +13,7 @@ function Contact() {
   const SERVICE_ID = "service_2rb4as7";
   const TEMPLATE_ID = "template_8yh5o45";
   const PUBLIC_KEY = "vxgoAdH_AIciY17rZ";
-  const TO_EMAIL = "jaswisys@gmail.com";
+  const TO_EMAIL = "info@jaswisys.com";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,7 +86,7 @@ function Contact() {
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="text-purple-400" size={22} />
-                  <a href="mailto:jaswisys@gmail.com" className="hover:text-purple-400">jaswisys@gmail.com</a>
+                  <a href="mailto:info@jaswisys.com" className="hover:text-purple-400">info@jaswisys.com</a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="text-purple-400" size={22} />
