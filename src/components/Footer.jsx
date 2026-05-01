@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Twitter, Facebook, Linkedin, Instagram, Mail } from "lucide-react";
 import Logo from "../assets/logo1.0.png";
 import footerVideo from "../assets/footerVideo.mp4"; // Your video file
 
 function Footer() {
+  const [showMessage, setShowMessage] = useState(false);
+
   const links = {
     company: [
       { label: "About", href: "#Features" },
@@ -119,12 +122,16 @@ function Footer() {
           <p className="text-sm text-gray-400 mb-4">
             Subscribe to our newsletter for product updates and tech insights.
           </p>
+
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const email = e.target.email.value;
 
-              window.location.href = `mailto:info@jaswisys.com?subject=Newsletter Subscription&body=Please subscribe this email: ${email}`;
+              setShowMessage(true);
+
+              setTimeout(() => {
+                setShowMessage(false);
+              }, 3000);
 
               e.target.reset();
             }}
@@ -144,6 +151,13 @@ function Footer() {
               <Mail size={18} />
             </button>
           </form>
+
+          {/* ✅ Success Message */}
+          {showMessage && (
+            <div className="mt-3 text-green-400 text-sm">
+              ✅ Subscription successful!
+            </div>
+          )}
         </div>
       </div>
 
