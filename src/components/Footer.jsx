@@ -45,7 +45,7 @@ function Footer() {
       .send(
         "service_2rb4as7",
         "template_cqm9blh",
-        { user_email: email },
+        "user_email",
         "vxgoAdH_AIciY17rZ"
       )
       .then(() => {
