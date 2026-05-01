@@ -118,7 +118,7 @@ function Navbar() {
         {/* Desktop Button */}
         <div className="hidden sm:flex">
           <a
-            href="mailto:jaswisys@gmail.com"
+            href="mailto:info@jaswisys.com"
             className="flex items-center gap-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-4 py-1.5 rounded-full hover:scale-105 transition text-sm sm:text-base"
           >
             Connect
