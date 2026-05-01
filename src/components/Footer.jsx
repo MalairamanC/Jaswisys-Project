@@ -123,7 +123,10 @@ function Footer() {
             onSubmit={(e) => {
               e.preventDefault();
               const email = e.target.email.value;
-              console.log("Subscribed:", email);
+
+              window.location.href = `mailto:info@jaswisys.com?subject=Newsletter Subscription&body=Please subscribe this email: ${email}`;
+
+              e.target.reset();
             }}
             className="flex bg-gray-900 rounded-lg overflow-hidden border border-gray-800"
           >
