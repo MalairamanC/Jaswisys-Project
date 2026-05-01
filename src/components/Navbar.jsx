@@ -15,7 +15,7 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
 
-  // ✅ Intersection Observer for active section
+  // Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,7 +38,7 @@ function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // ✅ Close mobile menu on outside click
+  // Close mobile menu on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest("nav")) {
@@ -75,8 +75,12 @@ function Navbar() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-3 flex justify-between items-center h-full">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
+        
+        {/* ✅ Logo (click → About section) */}
+        <div
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={() => handleLinkClick("AboutSection")}
+        >
           <img
             src={logo}
             alt="Logo"
