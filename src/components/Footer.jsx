@@ -44,7 +44,7 @@ function Footer() {
     emailjs
       .send(
         "service_2rb4as7",
-        "template_cqm9plh",
+        "template_cqm9blh",
         { user_email: email },
         "vxgoAdH_AIciY17rZ"
       )
