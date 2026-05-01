@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Twitter, Facebook, Linkedin, Instagram, Mail } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import Logo from "../assets/logo1.0.png";
-import footerVideo from "../assets/footerVideo.mp4"; // Your video file
+import footerVideo from "../assets/footerVideo.mp4";
 
 function Footer() {
   const [showMessage, setShowMessage] = useState(false);
@@ -36,6 +37,28 @@ function Footer() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+
+    emailjs
+      .send(
+        "service_2rb4as7",
+        "template_8yh5o45",
+        { user_email: email },
+        "vxgoAdH_AIciY17rZ"
+      )
+      .then(() => {
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 3000);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        alert("Failed to subscribe. Try again.");
+      });
+  };
+
   return (
     <footer className="relative text-gray-300 pt-16 pb-8 px-6 overflow-hidden">
       {/* Background Video */}
@@ -47,7 +70,7 @@ function Footer() {
         muted
       />
 
-      {/* Overlay for readability */}
+      {/* Overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-0"></div>
 
       {/* Content */}
@@ -124,17 +147,7 @@ function Footer() {
           </p>
 
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-
-              setShowMessage(true);
-
-              setTimeout(() => {
-                setShowMessage(false);
-              }, 3000);
-
-              e.target.reset();
-            }}
+            onSubmit={handleSubmit}
             className="flex bg-gray-900 rounded-lg overflow-hidden border border-gray-800"
           >
             <input
@@ -152,7 +165,7 @@ function Footer() {
             </button>
           </form>
 
-          {/* ✅ Success Message */}
+          {/* Success Message */}
           {showMessage && (
             <div className="mt-3 text-green-400 text-sm">
               ✅ Subscription successful!
