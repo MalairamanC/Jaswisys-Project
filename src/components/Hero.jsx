@@ -100,7 +100,7 @@ function Hero() {
         {/* Top Badge */}
         <motion.div
           variants={item}
-          className="inline-flex items-center gap-3 mb-12 px-6 py-2 text-sm rounded-xl
+          className="inline-flex flex-wrap items-center gap-3 sm:gap-3 mb-12 sm:mb-12 px-6 sm:px-6 py-2 text-sm rounded-xl
                      border border-transparent
                      bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),linear-gradient(to_right,#a855f7,#ec4899,#3b82f6)]
                      bg-origin-border bg-clip-padding bg-clip-border"
@@ -130,7 +130,7 @@ function Hero() {
         {/* Subheading */}
         <motion.div
           variants={item}
-          className="inline-block mb-8 px-6 py-3 text-base md:text-lg rounded-xl border-[2px] border-white/5 bg-clip-text text-transparent bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC05] animate-gradient-x"
+          className="w-full max-w-[95%] sm:max-w-3xl mx-auto mb-8 px-6 sm:px-6 py-3 text-sm text-base md:text-lg rounded-xl border-[2px] border-white/5 bg-clip-text text-transparent bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC05] animate-gradient-x"
         >
           We deliver top-notch IT software services, backed by experienced professionals, to help businesses thrive.
         </motion.div>
