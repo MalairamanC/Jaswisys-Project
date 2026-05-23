@@ -35,7 +35,7 @@ function TermsOfService({ setPage }) {
               Terms & Conditions
             </h1>
 
-            <p className="text-lg font-semibold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+            <p className="text-lg font-semibold bg-gradient-to-r from-green-400 via-teal-500 to-blue-600 text-transparent bg-clip-text">
               Welcome to Jaswisys
             </p>
           </div>
