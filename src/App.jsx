@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
@@ -7,69 +9,69 @@ import Careers from "./components/Careers";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-// Reusable section component for consistency
-const AppSection = ({ id, children, className = "" }) => (
-  <section
-    id={id}
-    className={className}
-    role="region"
-    aria-labelledby={`heading-${id}`}
-  >
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+
+// Reusable Section
+const AppSection = ({ id, children }) => (
+  <section id={id}>
     {children}
   </section>
 );
 
 export default function App() {
+  const [page, setPage] = useState("home");
+
+  // Privacy Policy Page
+  if (page === "privacy") {
+    return (
+      <PrivacyPolicy setPage={setPage} />
+    );
+  }
+
+  // Terms Page
+  if (page === "terms") {
+    return (
+      <TermsOfService setPage={setPage} />
+    );
+  }
+
+  // Home Page
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Navigation */}
+      {/* Navbar */}
       <Navbar />
 
       {/* Main Content */}
-      <main className="pt-0 sm:pt-0">
-        {/* Hero Section */}
+      <main>
         <AppSection id="Home">
           <Hero />
         </AppSection>
 
-        {/* Features Section */}
         <AppSection id="Features">
           <Features />
         </AppSection>
 
-        {/* About Section */}
         <AppSection id="About">
           <About />
         </AppSection>
 
-        {/* Services Section */}
         <AppSection id="Services">
           <Services />
         </AppSection>
 
-        {/* Careers Section */}
         <AppSection id="Careers">
           <Careers />
         </AppSection>
 
-        {/* Contact Section */}
         <AppSection id="Contact">
           <Contact />
         </AppSection>
 
-        {/* Footer Section */}
         <AppSection id="Footer">
-          <Footer />
+          <Footer setPage={setPage} />
         </AppSection>
       </main>
-
-      {/* Skip to Content Link for Accessibility */}
-      <a
-        href="#Home"
-        className="sr-only focus:not-sr-only fixed top-2 left-2 z-50 bg-purple-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-white"
-      >
-        Skip to main content
-      </a>
     </div>
   );
 }
