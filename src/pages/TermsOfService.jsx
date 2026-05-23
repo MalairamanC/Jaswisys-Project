@@ -232,7 +232,7 @@ function TermsOfService({ setPage }) {
 
               <p>
                 These Terms & Conditions shall be governed by and interpreted
-                in accordance with the laws of the USA, without regard to
+                in accordance with the laws of the India, without regard to
                 conflict of law principles.
               </p>
             </div>
