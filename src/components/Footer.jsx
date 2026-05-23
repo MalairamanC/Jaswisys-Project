@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { Twitter, Facebook, Linkedin, Instagram, Mail } from "lucide-react";
+import {
+  Twitter,
+  Facebook,
+  Linkedin,
+  Instagram,
+  Mail,
+} from "lucide-react";
+
 import emailjs from "@emailjs/browser";
+
 import Logo from "../assets/logo1.0.png";
 import footerVideo from "../assets/footerVideo.mp4";
 
-function Footer() {
+function Footer({ setPage }) {
   const [showMessage, setShowMessage] = useState(false);
 
   const links = {
@@ -14,31 +22,56 @@ function Footer() {
       { label: "Careers", href: "#Careers" },
       { label: "Contact", href: "#contact" },
     ],
+
     product: [
       { label: "Features", href: "#" },
       { label: "Support", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
     ],
   };
 
   const socials = [
-    { icon: Twitter, url: "https://twitter.com/jaswisys", label: "Twitter" },
-    { icon: Facebook, url: "https://facebook.com/jaswisys", label: "Facebook" },
-    { icon: Linkedin, url: "https://linkedin.com/company/jaswisystechnologies", label: "LinkedIn" },
-    { icon: Instagram, url: "https://instagram.com/jaswisystechnologies", label: "Instagram" },
+    {
+      icon: Twitter,
+      url: "https://twitter.com/jaswisys",
+      label: "Twitter",
+    },
+
+    {
+      icon: Facebook,
+      url: "https://facebook.com/jaswisys",
+      label: "Facebook",
+    },
+
+    {
+      icon: Linkedin,
+      url: "https://linkedin.com/company/jaswisystechnologies",
+      label: "LinkedIn",
+    },
+
+    {
+      icon: Instagram,
+      url: "https://instagram.com/jaswisystechnologies",
+      label: "Instagram",
+    },
   ];
 
   const handleScroll = (e, href) => {
     if (href.startsWith("#")) {
       e.preventDefault();
+
       const element = document.querySelector(href);
-      if (element) element.scrollIntoView({ behavior: "smooth" });
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const email = e.target.email.value;
 
     emailjs
@@ -50,7 +83,11 @@ function Footer() {
       )
       .then(() => {
         setShowMessage(true);
-        setTimeout(() => setShowMessage(false), 3000);
+
+        setTimeout(() => {
+          setShowMessage(false);
+        }, 3000);
+
         e.target.reset();
       })
       .catch((error) => {
@@ -68,6 +105,7 @@ function Footer() {
         autoPlay
         loop
         muted
+        playsInline
       />
 
       {/* Overlay */}
@@ -79,11 +117,21 @@ function Footer() {
         {/* Brand */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <img src={Logo} alt="Jaswisys logo" className="w-10 h-10 rounded-full" />
+            <img
+              src={Logo}
+              alt="Jaswisys logo"
+              className="w-10 h-10 rounded-full"
+            />
+
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text">
               JASWISYS
             </h2>
           </div>
+
+          <p className="mt-5 text-sm leading-6 text-gray-400">
+            Empowering businesses with innovative IT solutions,
+            consulting, training, and placement services.
+          </p>
 
           {/* Social Icons */}
           <div className="flex gap-3 pt-2">
@@ -94,7 +142,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 transition transform hover:scale-110"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gradient-to-r hover:from-blue-400 hover:via-purple-500 hover:to-pink-500 transition transform hover:scale-110"
               >
                 <Icon size={18} />
               </a>
@@ -104,7 +152,10 @@ function Footer() {
 
         {/* Company */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Company</h3>
+          <h3 className="text-white font-semibold mb-4">
+            Company
+          </h3>
+
           <ul className="space-y-2 text-sm">
             {links.company.map((item) => (
               <li key={item.label}>
@@ -114,6 +165,7 @@ function Footer() {
                   className="relative inline-block text-gray-400 hover:text-white transition group"
                 >
                   {item.label}
+
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </li>
@@ -123,7 +175,10 @@ function Footer() {
 
         {/* Product */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Product</h3>
+          <h3 className="text-white font-semibold mb-4">
+            Product
+          </h3>
+
           <ul className="space-y-2 text-sm">
             {links.product.map((item) => (
               <li key={item.label}>
@@ -132,6 +187,7 @@ function Footer() {
                   className="relative inline-block text-gray-400 hover:text-white transition group"
                 >
                   {item.label}
+
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </li>
@@ -141,9 +197,13 @@ function Footer() {
 
         {/* Newsletter */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
+          <h3 className="text-white font-semibold mb-4">
+            Stay Updated
+          </h3>
+
           <p className="text-sm text-gray-400 mb-4">
-            Subscribe to our newsletter for product updates and tech insights.
+            Subscribe to our newsletter for product updates
+            and tech insights.
           </p>
 
           <form
@@ -155,8 +215,9 @@ function Footer() {
               type="email"
               required
               placeholder="Enter email"
-              className="bg-transparent px-3 py-2 text-sm outline-none flex-1"
+              className="bg-transparent px-3 py-2 text-sm outline-none flex-1 text-white"
             />
+
             <button
               type="submit"
               className="px-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transition"
@@ -176,11 +237,32 @@ function Footer() {
 
       {/* Bottom */}
       <div className="relative z-10 border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} Jaswisys Technologies. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} Jaswisys Technologies.
+          All rights reserved.
+        </p>
+
         <div className="flex gap-6 mt-3 md:mt-0">
-          <a href="#" className="hover:text-white transition">Privacy Policy</a>
-          <a href="#" className="hover:text-white transition">Terms</a>
-          <a href="#" className="hover:text-white transition">Cookies</a>
+          <button
+            onClick={() => setPage("privacy")}
+            className="hover:text-white transition"
+          >
+            Privacy Policy
+          </button>
+
+          <button
+            onClick={() => setPage("terms")}
+            className="hover:text-white transition"
+          >
+            Terms Of Service
+          </button>
+
+          <a
+            href="#"
+            className="hover:text-white transition"
+          >
+            Cookies
+          </a>
         </div>
       </div>
     </footer>
