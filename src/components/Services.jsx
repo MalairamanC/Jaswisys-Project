@@ -144,23 +144,23 @@ function Card({ service, index, icon, onClick }) {
             display: "block",
           }}
         />
-        {/* Gradient overlay fading image into card body */}
+        {/* Gradient overlay fading image into card body (clear in the middle, only darkened near the bottom edge) */}
         <div style={{
           position: "absolute",
           inset: 0,
           background: `linear-gradient(
             to bottom,
-            rgba(8,9,15,0.1) 0%,
-            rgba(8,9,15,0.0) 40%,
-            rgba(8,9,15,0.65) 80%,
-            rgba(8,9,15,1) 100%
+            rgba(8,9,15,0.0) 0%,
+            rgba(8,9,15,0.0) 60%,
+            rgba(8,9,15,0.35) 85%,
+            rgba(8,9,15,0.85) 100%
           )`,
         }} />
-        {/* Colored tint on hover */}
+        {/* Subtle colored edge tint on hover — kept light so the photo stays clear */}
         <div style={{
           position: "absolute",
           inset: 0,
-          background: `rgba(${service.rgb},0.12)`,
+          background: `rgba(${service.rgb},0.05)`,
           opacity: hov ? 1 : 0,
           transition: "opacity 0.4s",
           mixBlendMode: "screen",
@@ -316,131 +316,123 @@ function Modal({ service, icon, onClose }) {
     setTimeout(() => setMounted(true), 10);
     const fn = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", fn);
+      document.body.style.overflow = "";
+    };
   }, [onClose]);
 
   return (
     <div
-      onClick={(e) => e.target === e.currentTarget && onClose()}
       style={{
         position: "fixed", inset: 0, zIndex: 999,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "1.5rem",
-        background: `rgba(2,3,12,${mounted ? 0.9 : 0})`,
-        backdropFilter: mounted ? "blur(18px)" : "blur(0px)",
-        WebkitBackdropFilter: mounted ? "blur(18px)" : "blur(0px)",
-        transition: "background 0.3s, backdrop-filter 0.3s",
+        overflowY: "auto",
+        background: "#09090f",
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? "translateY(0)" : "translateY(24px)",
+        transition: "opacity 0.35s ease, transform 0.4s cubic-bezier(.22,.68,0,1.2)",
       }}
     >
+      {/* Sticky close bar */}
       <div style={{
-        position: "relative",
-        background: "#09090f",
-        border: `1px solid rgba(${service.rgb},0.28)`,
-        borderRadius: 26,
-        maxWidth: 560,
-        width: "100%",
-        overflow: "hidden",
-        transform: mounted ? "translateY(0) scale(1)" : "translateY(40px) scale(0.96)",
-        opacity: mounted ? 1 : 0,
-        transition: "transform 0.4s cubic-bezier(.22,.68,0,1.2), opacity 0.3s",
-        boxShadow: `0 40px 100px rgba(${service.rgb},0.2), 0 0 0 1px rgba(${service.rgb},0.15)`,
+        position: "sticky", top: 0, zIndex: 5,
+        display: "flex", justifyContent: "flex-end",
+        padding: "1.2rem 1.5rem 0",
+        background: "linear-gradient(to bottom, #09090f 60%, transparent)",
       }}>
-        {/* Image header */}
-        <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
-          <img
-            src={service.image}
-            alt={service.title}
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          />
+        <button onClick={onClose} style={{
+          width: 38, height: 38, borderRadius: "50%",
+          background: "rgba(255,255,255,0.06)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          color: "rgba(255,255,255,0.7)",
+          cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <svg viewBox="0 0 24 24" fill="none" style={{ width: 16, height: 16 }}>
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Hero image header */}
+      <div style={{ position: "relative", height: "min(48vh, 420px)", overflow: "hidden", marginTop: "-3.5rem" }}>
+        <img
+          src={service.image}
+          alt={service.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: `linear-gradient(to bottom, rgba(9,9,15,0.0) 0%, rgba(9,9,15,0.0) 55%, rgba(9,9,15,0.92) 100%)`,
+        }} />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: `rgba(${service.rgb},0.06)`,
+          mixBlendMode: "screen",
+        }} />
+        <div style={{
+          position: "absolute", bottom: 28, left: 0, right: 0,
+          maxWidth: 760, margin: "0 auto", padding: "0 2rem",
+          display: "flex", alignItems: "center", gap: 14,
+        }}>
           <div style={{
-            position: "absolute", inset: 0,
-            background: `linear-gradient(to bottom, rgba(9,9,15,0.2) 0%, rgba(9,9,15,0.0) 40%, rgba(9,9,15,0.85) 100%)`,
-          }} />
-          <div style={{
-            position: "absolute", inset: 0,
-            background: `rgba(${service.rgb},0.15)`,
-            mixBlendMode: "screen",
-          }} />
-          {/* Floating title over image */}
-          <div style={{
-            position: "absolute", bottom: 18, left: 22,
-            display: "flex", alignItems: "center", gap: 10,
-          }}>
-            <div style={{
-              width: 42, height: 42, borderRadius: 12,
-              background: `rgba(${service.rgb},0.2)`,
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: `1px solid rgba(${service.rgb},0.35)`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: service.color,
-            }}>{icon}</div>
-            <div>
-              <div style={{
-                fontSize: 10, fontWeight: 700, letterSpacing: "0.16em",
-                textTransform: "uppercase", color: service.color,
-                marginBottom: 3,
-              }}>{service.tag}</div>
-              <h3 style={{
-                margin: 0, fontSize: "1.5rem", fontWeight: 800,
-                color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.1,
-                textShadow: "0 2px 12px rgba(0,0,0,0.5)",
-              }}>{service.title}</h3>
-            </div>
-          </div>
-          {/* Close button */}
-          <button onClick={onClose} style={{
-            position: "absolute", top: 14, right: 14,
-            width: 34, height: 34, borderRadius: "50%",
-            background: "rgba(0,0,0,0.5)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            color: "rgba(255,255,255,0.7)",
-            cursor: "pointer",
+            width: 56, height: 56, borderRadius: 14,
+            background: `rgba(${service.rgb},0.2)`,
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: `1px solid rgba(${service.rgb},0.35)`,
             display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <svg viewBox="0 0 24 24" fill="none" style={{ width: 14, height: 14 }}>
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
+            color: service.color, flexShrink: 0,
+          }}>{icon}</div>
+          <div>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.16em",
+              textTransform: "uppercase", color: service.color,
+              marginBottom: 4,
+            }}>{service.tag}</div>
+            <h2 style={{
+              margin: 0, fontSize: "clamp(2rem, 4.5vw, 3rem)", fontWeight: 800,
+              color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.05,
+              textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+            }}>{service.title}</h2>
+          </div>
         </div>
+      </div>
 
-        {/* Body */}
-        <div style={{ padding: "1.8rem 2.2rem 2.2rem" }}>
-          {/* Colored divider */}
-          <div style={{
-            height: 2, borderRadius: 2, marginBottom: "1.5rem",
-            background: `linear-gradient(90deg, ${service.color}, rgba(${service.rgb},0.1))`,
-          }} />
+      {/* Body */}
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "2.5rem 2rem 5rem" }}>
+        <div style={{
+          height: 2, borderRadius: 2, marginBottom: "2rem",
+          background: `linear-gradient(90deg, ${service.color}, rgba(${service.rgb},0.1))`,
+        }} />
 
-          <p style={{
-            margin: "0 0 2rem",
-            fontSize: "0.93rem",
-            color: "rgba(255,255,255,0.5)",
-            lineHeight: 1.85,
-          }}>{service.fullInfo}</p>
+        <p style={{
+          margin: "0 0 2.5rem",
+          fontSize: "1.05rem",
+          color: "rgba(255,255,255,0.55)",
+          lineHeight: 1.9,
+        }}>{service.fullInfo}</p>
 
-          <a
-            href="mailto:info@jaswisys.com"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "0.8rem 1.8rem",
-              borderRadius: 100,
-              background: `linear-gradient(135deg, ${service.color}, rgba(${service.rgb},0.55))`,
-              color: "#fff", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", letterSpacing: "0.02em",
-              transition: "opacity 0.2s, transform 0.2s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; e.currentTarget.style.transform = "scale(1.03)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
-          >
-            Enquire now
-            <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}>
-              <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </a>
-        </div>
+        <a
+          href="mailto:info@jaswisys.com"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "0.9rem 2rem",
+            borderRadius: 100,
+            background: `linear-gradient(135deg, ${service.color}, rgba(${service.rgb},0.55))`,
+            color: "#fff", fontWeight: 700, fontSize: "0.92rem",
+            textDecoration: "none", letterSpacing: "0.02em",
+            transition: "opacity 0.2s, transform 0.2s",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; e.currentTarget.style.transform = "scale(1.03)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
+        >
+          Enquire now
+          <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}>
+            <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </a>
       </div>
     </div>
   );
@@ -605,7 +597,7 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Full-page Learn More overlay */}
       {modal !== null && (
         <Modal service={services[modal]} icon={ICONS[modal]} onClose={() => setModal(null)} />
       )}
