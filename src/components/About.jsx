@@ -423,8 +423,8 @@ function About() {
                     className="flex gap-4 flex-wrap"
                   >
                     {[
-                      { value: "10+", label: "Years of Experience" },
-                      { value: "200+", label: "Clients Served" },
+                      { value: "1", label: "Years of Experience" },
+                      { value: "10+", label: "Clients Served" },
                       { value: "98%", label: "Satisfaction Rate" },
                     ].map((s, i) => (
                       <div
