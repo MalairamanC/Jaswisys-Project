@@ -238,7 +238,7 @@ function Footer({ setPage }) {
       {/* Bottom */}
       <div className="relative z-10 border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
         <p>
-          © {new Date().getFullYear()} Jaswisys Technologies.
+          © {new Date().getFullYear()} Jaswisys Technologies Pvt Ltd.
           All rights reserved.
         </p>
 
