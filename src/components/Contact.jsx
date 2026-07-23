@@ -97,7 +97,7 @@ function Contact() {
                 <div className="flex items-start gap-3">
                   <MapPin className="text-purple-400 mt-1" size={22} />
                   <div>
-                    <p className="font-semibold">Jaswisys Technologies</p>
+                    <p className="font-semibold">Jaswisys Technologies Pvt Ltd</p>
                     <p className="text-gray-400 text-sm">
                       No.1/4/2, RS Towers, 2nd Floor, New Natham Highway, Oomachikulam, Madurai, Tamil Nadu, India
                     </p>
