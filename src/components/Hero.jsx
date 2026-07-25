@@ -20,11 +20,9 @@ const item = {
 // Particle config
 const PARTICLE_COUNT = 90;
 const PARTICLE_COLORS = [
-  "rgba(192,90,255,VAL)",
-  "rgba(244,80,170,VAL)",
-  "rgba(56,145,255,VAL)",
-  "rgba(52,220,170,VAL)",
-  "rgba(255,160,60,VAL)",
+  "rgba(94,234,212,VAL)",
+  "rgba(255,138,61,VAL)",
+  "rgba(139,110,255,VAL)",
 ];
 
 const MOUSE_REPEL_RADIUS = 140;
@@ -245,7 +243,7 @@ function Hero() {
       </video>
 
       <div
-        className="absolute inset-0 bg-gradient-to-br from-black/25 via-black/10 to-black/25"
+        className="absolute inset-0 bg-gradient-to-br from-black/15 via-black/5 to-black/15"
         aria-hidden="true"
       />
 
@@ -256,15 +254,17 @@ function Hero() {
         aria-hidden="true"
       />
 
+      <div className="jw-grain absolute inset-0 pointer-events-none" style={{ zIndex: 3 }} aria-hidden="true" />
+
       <div
         ref={glowTopRef}
-        className="absolute w-[520px] h-[520px] rounded-full top-[-60px] left-[-140px]"
+        className="absolute w-[560px] h-[560px] rounded-full top-[-80px] left-[-160px]"
         style={{
           willChange: "transform",
           zIndex: 2,
           background:
-            "radial-gradient(circle, rgba(168,60,255,0.38) 0%, rgba(120,30,220,0.15) 50%, transparent 75%)",
-          filter: "blur(60px)",
+            "radial-gradient(circle, rgba(139,110,255,0.28) 0%, rgba(139,110,255,0.1) 50%, transparent 75%)",
+          filter: "blur(70px)",
           animation: "glowPulse 6s ease-in-out infinite",
         }}
         aria-hidden="true"
@@ -272,7 +272,7 @@ function Hero() {
 
       <div
         ref={glowMidRef}
-        className="absolute w-[360px] h-[360px] rounded-full"
+        className="absolute w-[380px] h-[380px] rounded-full"
         style={{
           willChange: "transform",
           zIndex: 2,
@@ -280,8 +280,8 @@ function Hero() {
           left: "60%",
           transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(circle, rgba(52,211,180,0.22) 0%, transparent 70%)",
-          filter: "blur(70px)",
+            "radial-gradient(circle, rgba(94,234,212,0.18) 0%, transparent 70%)",
+          filter: "blur(80px)",
           animation: "glowPulse 8s ease-in-out infinite reverse",
         }}
         aria-hidden="true"
@@ -289,19 +289,21 @@ function Hero() {
 
       <div
         ref={glowBottomRef}
-        className="absolute w-[520px] h-[520px] rounded-full bottom-[-60px] right-[-140px]"
+        className="absolute w-[560px] h-[560px] rounded-full bottom-[-80px] right-[-160px]"
         style={{
           willChange: "transform",
           zIndex: 2,
           background:
-            "radial-gradient(circle, rgba(56,130,255,0.35) 0%, rgba(20,80,220,0.12) 50%, transparent 75%)",
-          filter: "blur(60px)",
+            "radial-gradient(circle, rgba(255,138,61,0.22) 0%, rgba(255,138,61,0.08) 50%, transparent 75%)",
+          filter: "blur(70px)",
           animation: "glowPulse 7s ease-in-out infinite 1s",
         }}
         aria-hidden="true"
       />
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
         @keyframes glowPulse {
           0%, 100% { opacity: 0.75; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.12); }
@@ -311,144 +313,193 @@ function Hero() {
           0% { background-position: 0% center; }
           100% { background-position: 200% center; }
         }
+
+        .jw-mono { font-family: 'JetBrains Mono', monospace; }
+        .jw-display { font-family: 'Space Grotesk', sans-serif; }
+
+        .jw-tag {
+          clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+          transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .jw-tag:hover {
+          transform: translateY(-2px);
+          border-color: rgba(94,234,212,0.6) !important;
+          background: rgba(23,35,45,0.8) !important;
+        }
+
+        .jw-glass {
+          position: relative;
+          background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012));
+          border: 1px solid rgba(255,255,255,0.09);
+          backdrop-filter: blur(14px);
+          box-shadow: 0 30px 90px -20px rgba(0,0,0,0.65), 0 8px 24px -8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .jw-glass::before {
+          content: "";
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(120deg, rgba(94,234,212,0.5), rgba(139,110,255,0.15) 35%, rgba(255,138,61,0.4) 70%, rgba(94,234,212,0.5));
+          background-size: 300% 300%;
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: borderFlow 10s linear infinite;
+          pointer-events: none;
+          opacity: 0.7;
+        }
+
+        @keyframes borderFlow {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 300% 50%; }
+        }
+
+        .jw-grain {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+          opacity: 0.05;
+          mix-blend-mode: overlay;
+        }
+
+        .jw-btn-primary {
+          box-shadow: 0 8px 30px -6px rgba(94,234,212,0.5);
+        }
+        .jw-btn-primary:hover {
+          box-shadow: 0 10px 40px -6px rgba(94,234,212,0.75);
+        }
+        .jw-btn-secondary:hover {
+          background: rgba(255,138,61,0.1) !important;
+          box-shadow: 0 8px 30px -8px rgba(255,138,61,0.4);
+        }
+        .jw-icon-circle {
+          width: 22px;
+          height: 22px;
+          border-radius: 9999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.25s ease;
+        }
+        .jw-btn-primary:hover .jw-icon-circle {
+          transform: translateX(3px);
+        }
       `}</style>
 
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 text-center max-w-5xl"
+        className="relative z-10 max-w-5xl"
       >
-        <motion.div
-          variants={item}
-          className="flex flex-wrap items-center justify-center gap-3 mb-12"
-        >
-          {[
-            { label: "IT Solutions", color: "bg-purple-400" },
-            { label: "Consulting", color: "bg-pink-400" },
-            { label: "Outsourcing", color: "bg-blue-400" },
-            { label: "Training", color: "bg-green-400" },
-          ].map(({ label, color }, i) => (
-            <div
-              key={label}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-xl"
+        <div className="jw-glass rounded-[32px] px-6 pt-14 pb-10 sm:px-14 sm:pt-16 sm:pb-12 text-center">
+          <motion.p
+            variants={item}
+            className="jw-mono text-[11px] tracking-[0.25em] uppercase mb-5"
+            style={{ color: "#5EEAD4" }}
+          >
+            Systems that scale with you
+          </motion.p>
+
+          <motion.div
+            variants={item}
+            className="flex flex-wrap items-center justify-center gap-3 mb-8"
+          >
+            {[
+              { label: "IT Solutions", dot: "#5EEAD4" },
+              { label: "Consulting", dot: "#8B6EFF" },
+              { label: "Outsourcing", dot: "#FF8A3D" },
+              { label: "Training", dot: "#60D6FF" },
+            ].map(({ label, dot }) => (
+              <div
+                key={label}
+                className="jw-tag jw-mono inline-flex items-center gap-2 px-4 py-2 text-[11px] uppercase tracking-widest"
+                style={{
+                  color: "#5EEAD4",
+                  background: "rgba(10,15,20,0.75)",
+                  border: "1px solid rgba(94,234,212,0.4)",
+                  backdropFilter: "blur(10px)",
+                  boxShadow: "0 8px 24px -8px rgba(0,0,0,0.6)",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ background: dot, boxShadow: `0 0 6px ${dot}` }}
+                  aria-hidden="true"
+                />
+                {label}
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.h1
+            variants={item}
+            className="jw-display text-4xl sm:text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-6"
+            style={{ textShadow: "0 4px 40px rgba(0,0,0,0.4)" }}
+          >
+            Build Your Business with{" "}
+            <span
+              className="bg-clip-text text-transparent"
               style={{
-                background:
-                  "linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)) padding-box, linear-gradient(135deg, #a855f7, #ec4899, #3b82f6) border-box",
-                border: "1.5px solid transparent",
-                backdropFilter: "blur(6px)",
+                backgroundImage:
+                  "linear-gradient(90deg, #5EEAD4, #34d399, #8B6EFF, #FF8A3D)",
+                backgroundSize: "200% auto",
+                animation: "shimmer 4s linear infinite",
               }}
             >
-              <span
-                className={`${color} w-2 h-2 rounded-full animate-pulse`}
-                style={{ animationDelay: `${i * 0.2}s` }}
-              />
-              <span className="text-white font-medium text-xs uppercase tracking-widest whitespace-nowrap">
-                {label}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+              Jaswisys Technologies
+            </span>
+          </motion.h1>
 
-        <motion.h1
-          variants={item}
-          className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white mb-6"
-        >
-          Build Your Business with{" "}
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #34d399, #22d3ee, #60a5fa, #a78bfa)",
-              backgroundSize: "200% auto",
-              animation: "shimmer 4s linear infinite",
-            }}
+          <motion.p
+            variants={item}
+            className="w-full max-w-2xl mx-auto mb-10 text-base md:text-lg text-white/70 leading-relaxed font-light"
           >
-            Jaswisys Technologies
-          </span>
-        </motion.h1>
+            We deliver top-notch IT software services, backed by experienced
+            professionals, to help businesses thrive.
+          </motion.p>
 
-        <motion.p
-          variants={item}
-          className="w-full max-w-2xl mx-auto mb-8 px-6 py-3 text-base md:text-lg text-white/80 leading-relaxed"
-        >
-          We deliver top-notch IT software services, backed by experienced
-          professionals, to help businesses thrive.
-        </motion.p>
-
-        <motion.div
-          variants={item}
-          className="mt-6 flex flex-col sm:flex-row justify-center gap-4"
-        >
-          <button
-            onClick={handleScrollToServices}
-            className="relative px-8 py-3 rounded-full text-sm font-semibold tracking-wide hover:scale-[1.05] active:scale-[0.97] transition-transform duration-200"
-            style={{
-              background:
-                "linear-gradient(#0d0d0d, #0d0d0d) padding-box, linear-gradient(135deg, #a855f7, #06b6d4, #3b82f6) border-box",
-              border: "2px solid transparent",
-              boxShadow: "0 0 24px rgba(168,85,247,0.25)",
-            }}
+          <motion.div
+            variants={item}
+            className="mt-6 flex flex-col sm:flex-row justify-center gap-4"
           >
-            <span className="bg-gradient-to-r from-purple-400 via-teal-300 to-blue-400 bg-clip-text text-transparent font-semibold">
+            <button
+              onClick={handleScrollToServices}
+              className="jw-display jw-btn-primary inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full text-sm font-semibold tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              style={{ background: "#5EEAD4", color: "#0A0F14" }}
+            >
               Explore Services
-            </span>
-          </button>
+              <span className="jw-icon-circle" style={{ background: "#0A0F14", color: "#5EEAD4" }} aria-hidden="true">
+                →
+              </span>
+            </button>
 
-          <button
-            onClick={handleContactClick}
-            className="relative px-8 py-3 rounded-xl text-sm font-semibold tracking-wide hover:scale-[1.05] active:scale-[0.97] transition-transform duration-200"
-            style={{
-              background:
-                "linear-gradient(#0d0d0d, #0d0d0d) padding-box, linear-gradient(135deg, #f59e0b, #ef4444, #ec4899) border-box",
-              border: "2px solid transparent",
-              boxShadow: "0 0 24px rgba(245,158,11,0.2)",
-            }}
-          >
-            <span className="bg-gradient-to-r from-amber-400 via-red-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+            <button
+              onClick={handleContactClick}
+              className="jw-display jw-btn-secondary inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full text-sm font-semibold tracking-wide transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              style={{ background: "transparent", color: "#FF8A3D", border: "1.5px solid #FF8A3D" }}
+            >
               Contact Us
-            </span>
-          </button>
-        </motion.div>
-      </motion.div>
+              <span className="jw-icon-circle" style={{ border: "1.5px solid #FF8A3D", color: "#FF8A3D" }} aria-hidden="true">
+                ↗
+              </span>
+            </button>
+          </motion.div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-2 flex flex-col items-center gap-2"
-        style={{ zIndex: 10 }}
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden="true"
-      >
-        <span className="text-xs tracking-widest uppercase text-white/60">
-          Scroll
-        </span>
-
-        <div
-          className="relative w-7 h-11 rounded-full p-[2px]"
-          style={{
-            background:
-              "linear-gradient(180deg, #a855f7, #ec4899, #22d3ee, #34d399)",
-            boxShadow:
-              "0 0 18px rgba(236,72,153,0.45), 0 0 28px rgba(34,211,238,0.35)",
-          }}
-        >
-          <div className="relative w-full h-full rounded-full bg-black/70 backdrop-blur-sm">
+          {/* Scroll indicator — now inside the glass panel */}
+          <motion.div
+            variants={item}
+            className="jw-mono flex items-center justify-center gap-2 text-[11px] tracking-widest uppercase mt-10"
+            style={{ color: "#8B98A5" }}
+          >
             <motion.span
-              className="absolute left-1/2 top-2 w-1.5 h-1.5 -translate-x-1/2 rounded-full"
-              style={{
-                background:
-                  "linear-gradient(180deg, #ffffff, #22d3ee, #ec4899)",
-                boxShadow: "0 0 12px rgba(34,211,238,0.9)",
-              }}
-              animate={{ y: [0, 17, 0], opacity: [1, 0.35, 1] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "#5EEAD4", boxShadow: "0 0 8px rgba(94,234,212,0.9)" }}
+              animate={{ opacity: [1, 0.25, 1] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
             />
-          </div>
+            Scroll to explore
+          </motion.div>
         </div>
       </motion.div>
     </section>
