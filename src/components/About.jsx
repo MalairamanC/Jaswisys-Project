@@ -255,9 +255,9 @@ function About() {
 
               {/* Stats row */}
               <div className="flex gap-4 flex-wrap mt-1">
-                <StatChip value="1" label="Years" delay={0.6} />
-                <StatChip value="10+" label="Clients" delay={0.7} />
-                <StatChip value="98%" label="Satisfaction" delay={0.8} />
+                <StatChip value="2" label="Years" delay={0.6} />
+                <StatChip value="5+" label="Clients" delay={0.7} />
+                <StatChip value="99%" label="Satisfaction" delay={0.8} />
               </div>
 
               {/* CTA button — centered */}
@@ -423,9 +423,9 @@ function About() {
                     className="flex gap-4 flex-wrap"
                   >
                     {[
-                      { value: "1", label: "Years of Experience" },
-                      { value: "10+", label: "Clients Served" },
-                      { value: "98%", label: "Satisfaction Rate" },
+                      { value: "2", label: "Years of Experience" },
+                      { value: "5+", label: "Clients Served" },
+                      { value: "99%", label: "Satisfaction Rate" },
                     ].map((s, i) => (
                       <div
                         key={i}
