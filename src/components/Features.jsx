@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import FeaturesBg from "../assets/FeaturesBg.png";
 
 const features = [
@@ -7,6 +8,7 @@ const features = [
     tag: "The Horizon",
     desc: "Our vision is to be a global leader in innovation and technology. We deliver cutting-edge enterprise solutions that inspire others and help our customers achieve greater value and long-term success.",
     color: "#5EEAD4",
+    colorSoft: "#A7F3E8",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" fill="none" {...props}>
         <path
@@ -18,17 +20,73 @@ const features = [
         <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     ),
+    // Wave signature: a horizon line, echoing "The Horizon" tag
+    banner: (id) => (
+      <svg viewBox="0 0 400 320" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id={`${id}-bg`} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#0B3B36" />
+            <stop offset="100%" stopColor="#062421" />
+          </linearGradient>
+          <linearGradient id={`${id}-wave`} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#5EEAD4" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#D7FF3F" stopOpacity="0.65" />
+          </linearGradient>
+        </defs>
+        <rect width="400" height="320" fill={`url(#${id}-bg)`} />
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <path
+            key={i}
+            d={`M-20 ${220 - i * 22} C 80 ${150 - i * 26}, 160 ${270 - i * 18}, 240 ${160 - i * 22} S 380 ${200 - i * 20}, 420 ${130 - i * 22}`}
+            fill="none"
+            stroke={`url(#${id}-wave)`}
+            strokeWidth={i === 2 ? 2 : 1}
+            opacity={0.85 - i * 0.1}
+          />
+        ))}
+        <circle cx="322" cy="72" r="26" fill="#5EEAD4" opacity="0.9" />
+        <circle cx="322" cy="72" r="44" fill="#5EEAD4" opacity="0.18" />
+      </svg>
+    ),
   },
   {
     title: "Our Mission",
     tag: "The Standard",
     desc: "Our mission is to become the most reliable technology services company by serving as a trusted partner and consistently exceeding customer expectations through innovative solutions and exceptional service.",
     color: "#7C9CFF",
+    colorSoft: "#C6D3FF",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" fill="none" {...props}>
         <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
         <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
         <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+      </svg>
+    ),
+    // Concentric-ring signature, echoing the target/standard icon
+    banner: (id) => (
+      <svg viewBox="0 0 400 320" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id={`${id}-bg`} cx="50%" cy="45%" r="75%">
+            <stop offset="0%" stopColor="#1A2456" />
+            <stop offset="100%" stopColor="#0A0F2B" />
+          </radialGradient>
+        </defs>
+        <rect width="400" height="320" fill={`url(#${id}-bg)`} />
+        {[120, 88, 56, 28].map((r, i) => (
+          <circle
+            key={r}
+            cx="200"
+            cy="158"
+            r={r}
+            fill="none"
+            stroke="#7C9CFF"
+            strokeWidth={i === 3 ? 2 : 1}
+            opacity={0.9 - i * 0.16}
+          />
+        ))}
+        <circle cx="200" cy="158" r="6" fill="#D7FF3F" />
+        <line x1="0" y1="158" x2="180" y2="158" stroke="#7C9CFF" strokeWidth="1" opacity="0.4" />
+        <line x1="220" y1="158" x2="400" y2="158" stroke="#7C9CFF" strokeWidth="1" opacity="0.4" />
       </svg>
     ),
   },
@@ -37,6 +95,7 @@ const features = [
     tag: "The Practice",
     desc: "We are committed to creating value for our customers by delivering high-quality IT solutions that enhance user experience, optimize operations, and drive business growth.",
     color: "#FF8A3D",
+    colorSoft: "#FFC79A",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" fill="none" {...props}>
         <path
@@ -53,6 +112,32 @@ const features = [
         />
       </svg>
     ),
+    // Faceted gem/compass signature, echoing the value icon
+    banner: (id) => (
+      <svg viewBox="0 0 400 320" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id={`${id}-bg`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3A2010" />
+            <stop offset="100%" stopColor="#1A0E06" />
+          </linearGradient>
+          <linearGradient id={`${id}-gem`} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#FFC79A" />
+            <stop offset="100%" stopColor="#FF8A3D" />
+          </linearGradient>
+        </defs>
+        <rect width="400" height="320" fill={`url(#${id}-bg)`} />
+        <path
+          d="M160 90 H240 L280 148 L200 232 L120 148 Z"
+          fill="none"
+          stroke={`url(#${id}-gem)`}
+          strokeWidth="1.5"
+        />
+        <path d="M120 148 H280 M160 90 L200 148 L240 90 M200 148 L200 232" stroke="#FF8A3D" strokeWidth="1" opacity="0.6" />
+        <circle cx="90" cy="200" r="3" fill="#FF8A3D" />
+        <circle cx="330" cy="100" r="3" fill="#FF8A3D" />
+        <circle cx="320" cy="220" r="3" fill="#D7FF3F" />
+      </svg>
+    ),
   },
 ];
 
@@ -65,7 +150,10 @@ const cardVariant = {
   }),
 };
 
-function FeatureCard({ title, tag, desc, color, Icon, index }) {
+function FeatureCard({ title, tag, desc, color, colorSoft, banner, Icon, index }) {
+  const gradId = `jw-f-banner-${index}`;
+  const [selected, setSelected] = useState(false);
+
   return (
     <motion.div
       custom={index}
@@ -73,33 +161,41 @@ function FeatureCard({ title, tag, desc, color, Icon, index }) {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.4 }}
-      className="jw-f-ring relative w-full max-w-sm"
-      style={{ "--accent": color }}
+      className={`jw-f-card relative w-full max-w-sm ${selected ? "jw-f-selected" : ""}`}
+      style={{ "--accent": color, "--accent-soft": colorSoft }}
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      onClick={() => setSelected((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setSelected((v) => !v);
+        }
+      }}
     >
-      <div className="jw-f-card relative w-full h-full flex flex-col items-center text-center p-7 rounded-2xl">
-        <span className="jw-f-corner jw-f-corner-tl" aria-hidden="true" />
-        <span className="jw-f-corner jw-f-corner-br" aria-hidden="true" />
+      {/* Banner / image area */}
+      <div className="jw-f-banner relative w-full h-64 overflow-hidden rounded-2xl">
+        {banner(gradId)}
 
+        {/* Icon badge, overlapping the top-left corner of the image */}
         <div
-          className="jw-f-icon w-12 h-12 rounded-xl flex items-center justify-center mb-6"
-          style={{ color, borderColor: `${color}55` }}
+          className="jw-f-badge absolute top-4 left-4 w-11 h-11 rounded-xl flex items-center justify-center"
+          style={{ color }}
         >
           <Icon className="w-5 h-5" />
         </div>
+      </div>
 
-        <span
-          className="jw-mono text-[10px] tracking-[0.25em] uppercase mb-2"
-          style={{ color: `${color}CC` }}
-        >
+      {/* Glass label, overlapping the bottom of the image */}
+      <div className="jw-f-label relative z-10 -mt-9 mx-4 rounded-2xl p-6 text-center">
+        <span className="jw-mono block text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color }}>
           {tag}
         </span>
-
-        <h3 className="jw-display text-xl font-bold text-white relative inline-block mb-3">
-          {title}
-          <span className="jw-f-underline" style={{ background: color }} />
+        <h3 className="jw-display text-xl font-bold jw-f-title" style={{ color: "#F5F7FA" }}>
+          <span className="jw-f-title-inner">{title}</span>
         </h3>
-
-        <p className="jw-body text-sm leading-relaxed" style={{ color: "rgba(235,238,242,0.78)" }}>
+        <p className="jw-body text-sm leading-relaxed" style={{ color: "rgba(235,238,242,0.75)" }}>
           {desc}
         </p>
       </div>
@@ -201,62 +297,97 @@ function Features() {
           animation: jwFRollingColour 8s ease-in-out infinite;
         }
 
-        /* Gradient-ring border: a soft brand-coloured edge instead of a flat 1px line,
-           letting the frosted card read as "modern glass" rather than a plain box */
-        .jw-f-ring {
-          border-radius: 1rem;
-          padding: 1px;
-          background: linear-gradient(
-            160deg,
-            color-mix(in srgb, var(--accent) 55%, transparent) 0%,
-            rgba(255,255,255,0.08) 35%,
-            rgba(255,255,255,0.04) 100%
-          );
-          transition: background 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-        }
-        .jw-f-ring:hover {
-          transform: translateY(-6px);
-          background: linear-gradient(
-            160deg,
-            color-mix(in srgb, var(--accent) 85%, transparent) 0%,
-            color-mix(in srgb, var(--accent) 25%, transparent) 45%,
-            rgba(255,255,255,0.06) 100%
-          );
-        }
-
+        /* Card shell — the image + overlapping dark label read as one unit,
+           lifted by a soft brand-tinted shadow instead of a flat box-shadow */
         .jw-f-card {
-          background: rgba(12,15,18,0.4);
-          backdrop-filter: blur(18px) saturate(1.15);
-          -webkit-backdrop-filter: blur(18px) saturate(1.15);
-          box-shadow: 0 24px 48px -28px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
-          transition: box-shadow 0.35s ease, background 0.35s ease;
+          cursor: pointer;
+          filter: drop-shadow(0 24px 40px rgba(0,0,0,0.45));
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), filter 0.35s ease;
         }
-        .jw-f-ring:hover .jw-f-card {
-          background: rgba(14,18,22,0.52);
-          box-shadow: 0 30px 60px -24px color-mix(in srgb, var(--accent) 45%, transparent), inset 0 1px 0 rgba(255,255,255,0.09);
+        .jw-f-card:hover {
+          transform: translateY(-6px);
+          filter: drop-shadow(0 30px 50px color-mix(in srgb, var(--accent) 35%, rgba(0,0,0,0.45)));
         }
-
-        .jw-f-corner { position: absolute; width: 16px; height: 16px; opacity: 0; transition: opacity 0.35s ease; }
-        .jw-f-corner-tl { top: 10px; left: 10px; border-top: 1.5px solid var(--accent); border-left: 1.5px solid var(--accent); }
-        .jw-f-corner-br { bottom: 10px; right: 10px; border-bottom: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); }
-        .jw-f-ring:hover .jw-f-corner { opacity: 0.85; }
-
-        .jw-f-icon {
-          border: 1.5px solid;
-          background: color-mix(in srgb, var(--accent, currentColor) 12%, transparent);
+        .jw-f-card:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 4px;
+          border-radius: 1.25rem;
         }
 
-        .jw-f-underline {
+        .jw-f-banner {
+          position: relative;
+          box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
+        }
+        .jw-f-banner svg {
+          display: block;
+          transform-origin: center;
+          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .jw-f-card:hover .jw-f-banner svg { transform: scale(1.05); }
+
+        .jw-f-badge {
+          background: #0B0B10;
+          border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+          box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6);
+        }
+
+        /* Glass label — translucent + blurred, banner colour shows through */
+        .jw-f-label {
+          background: rgba(18, 20, 28, 0.45);
+          backdrop-filter: blur(18px) saturate(140%);
+          -webkit-backdrop-filter: blur(18px) saturate(140%);
+          border: 1px solid rgba(255,255,255,0.14);
+          box-shadow:
+            0 20px 40px -20px rgba(0,0,0,0.6),
+            inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .jw-f-title {
+          margin-bottom: 14px;
+        }
+        .jw-f-title-inner {
+          position: relative;
+          display: inline-block;
+        }
+        .jw-f-title-inner::after {
+          content: "";
           position: absolute;
           left: 50%;
-          bottom: -3px;
+          bottom: -8px;
+          width: 36px;
           height: 2px;
-          width: 28px;
           border-radius: 2px;
+          background: var(--accent);
           transform: translateX(-50%);
-          transition: width 0.3s ease;
+          transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
         }
-        .jw-f-ring:hover .jw-f-underline { width: 70%; }
+        .jw-f-card:hover .jw-f-title-inner::after {
+          width: 100%;
+        }
+
+        /* Selection zoom: clicking/tapping a card zooms its art and frame in, then settles back out */
+        @keyframes jwFSelectZoom {
+          0%   { transform: scale(1); }
+          45%  { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+        @keyframes jwFSelectZoomArt {
+          0%   { transform: scale(1); }
+          45%  { transform: scale(1.16); }
+          100% { transform: scale(1.08); }
+        }
+        .jw-f-selected {
+          animation: jwFSelectZoom 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .jw-f-selected .jw-f-banner svg {
+          animation: jwFSelectZoomArt 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        .jw-f-selected .jw-f-badge {
+          border-color: var(--accent);
+        }
+        .jw-f-selected .jw-f-label {
+          box-shadow: 0 24px 48px -18px color-mix(in srgb, var(--accent) 55%, rgba(0,0,0,0.5));
+        }
 
         @media (max-width: 768px) {
           .bg-fixed { background-attachment: scroll; }
@@ -265,7 +396,8 @@ function Features() {
         @media (prefers-reduced-motion: reduce) {
           .jw-f-eyebrow-dot { animation: none; }
           .jw-f-rolling-text { animation: none; background-position: 0% 50%; }
-          .jw-f-ring, .jw-f-card, .jw-f-corner, .jw-f-underline { transition: none; }
+          .jw-f-card, .jw-f-banner svg { transition: none; }
+          .jw-f-selected, .jw-f-selected .jw-f-banner svg { animation: none; }
         }
       `}</style>
 
@@ -292,7 +424,7 @@ function Features() {
         </div>
 
         {/* Grid Layout */}
-        <div className="max-w-5xl mx-auto px-6 grid gap-6 md:grid-cols-3 place-items-stretch">
+        <div className="max-w-5xl mx-auto px-6 grid gap-8 md:grid-cols-3 place-items-stretch">
           {features.map((feature, idx) => (
             <FeatureCard
               key={idx}
@@ -301,6 +433,8 @@ function Features() {
               tag={feature.tag}
               desc={feature.desc}
               color={feature.color}
+              colorSoft={feature.colorSoft}
+              banner={feature.banner}
               Icon={feature.Icon}
             />
           ))}
