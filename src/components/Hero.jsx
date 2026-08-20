@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import heroVideo from "../assets/Video1.mp4";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import heroVideo1 from "../assets/Video1.mp4";
+// TODO: add these three files to ../assets (or point these imports at videos/images
+// you already have) — the carousel below expects four distinct media sources.
+import heroVideo2 from "../assets/Video2.mp4";
+import heroVideo3 from "../assets/Video3.mp4";
+import heroVideo4 from "../assets/Video4.mp4";
 
 const container = {
   hidden: {},
@@ -16,29 +21,86 @@ const item = {
   },
 };
 
-// Core capability lines — shown as quiet pills under the subcopy
+// Core capability lines — shown as quiet pills under the subcopy. Persistent
+// across slides (not slide-specific), since they're the company's full service list.
 const SERVICES = ["IT Solutions", "Consulting", "Outsourcing", "Training"];
 
-// Rotating trust line in the top readout bar — one accent colour throughout,
-// so it reads as a single credible signal rather than a light show
+// Rotating trust line in the top readout bar — independent of the hero carousel below.
 const TRUST_LINES = [
   "5+ Enterprise Clients",
   "24/7 Global Support Desk",
   "99.9% Platform Uptime",
 ];
 
-// Ops/status readout — the hero's one signature element. Framed as a live
-// systems bar because that's a credible, industry-specific thing for an
-// IT-services company to show, not decoration for its own sake.
+// Ops/status readout — the hero's signature element, also independent of the carousel.
 const STATUS_ITEMS = [
   "SYSTEMS OPERATIONAL",
   "GOOD SUPPORT RESPONSE",
 ];
 
+// Each slide owns its own background media, eyebrow, headline, and subcopy —
+// the three things that should differ slide to slide. CTAs, pills, and the
+// stats row stay constant and live outside the carousel.
+const SLIDES = [
+  {
+    id: "it-solutions",
+    media: { type: "video", src: heroVideo1 },
+    eyebrow: "Enterprise IT Partner",
+    headlineLead: "Enterprise technology, delivered with",
+    headlineBold: "precision and",
+    headlineAccent: "scale.",
+    subcopyPrefix: "",
+    subcopy:
+      " deliver top-notch IT software services, backed by experienced professionals, to help businesses thrive.",
+    showCapabilityPills: true,
+  },
+  {
+    id: "consulting",
+    media: { type: "video", src: heroVideo2 },
+    eyebrow: "Strategic Consulting",
+    headlineLead: "Strategic consulting for",
+    headlineBold: "digital",
+    headlineAccent: "transformation",
+    subcopyPrefix: "",
+    subcopy:
+      " guides enterprise teams through technology strategy, architecture, and change management — turning complex transformation into measurable outcomes.",
+    showCapabilityPills: false,
+  },
+  {
+    id: "outsourcing",
+    media: { type: "video", src: heroVideo3 },
+    eyebrow: "Global Outsourcing",
+    headlineLead: "Scale your team with",
+    headlineBold: "expert",
+    headlineAccent: "Outsourcing.",
+    subcopyPrefix: "",
+    subcopy:
+      " helps you scale delivery capacity with dedicated development pods and staff augmentation, without scaling overhead.",
+    showCapabilityPills: false,
+  },
+  {
+    id: "training",
+    media: { type: "video", src: heroVideo4 },
+    eyebrow: "Enterprise Training",
+    headlineLead: "Upskill your workforce with",
+    headlineBold: "enterprise-grade",
+    headlineAccent: "Training",
+    subcopyPrefix: "",
+    subcopy:
+      " designs and delivers technical training programs that keep enterprise teams current, certified, and productive.",
+    showCapabilityPills: false,
+  },
+];
+
+const AUTO_ADVANCE_MS = 7000;
+
 function Hero() {
   const videoRef = useRef(null);
   const rafRef = useRef(null);
+  const timeoutRef = useRef(null);
   const [trustIdx, setTrustIdx] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const id = setInterval(
@@ -47,6 +109,17 @@ function Hero() {
     );
     return () => clearInterval(id);
   }, []);
+
+  // Auto-advance the carousel. Re-runs every time currentSlide changes, which
+  // means a manual click (dot/arrow) naturally resets the timer instead of
+  // fighting it. Skipped entirely if the user prefers reduced motion.
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    timeoutRef.current = setTimeout(() => {
+      setCurrentSlide((i) => (i + 1) % SLIDES.length);
+    }, AUTO_ADVANCE_MS);
+    return () => clearTimeout(timeoutRef.current);
+  }, [currentSlide, shouldReduceMotion]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,28 +152,43 @@ function Hero() {
     }
   };
 
+  const goToSlide = (index) => setCurrentSlide(index);
+  const nextSlide = () => setCurrentSlide((i) => (i + 1) % SLIDES.length);
+  const prevSlide = () => setCurrentSlide((i) => (i - 1 + SLIDES.length) % SLIDES.length);
+
+  const slide = SLIDES[currentSlide];
+
   return (
     <section
       className="relative min-h-screen overflow-hidden bg-[#070C16]"
       aria-label="Hero"
+      aria-roledescription="carousel"
       role="region"
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        className="jw-hero-video absolute inset-0 w-full h-full object-cover"
-        style={{
-          willChange: "transform",
-          filter: "grayscale(0.05) contrast(1.05) brightness(0.98) saturate(1.05)",
-        }}
-        aria-hidden="true"
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+      {/* Background media — crossfades between slides */}
+      <AnimatePresence mode="sync">
+        <motion.video
+          key={slide.id}
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="jw-hero-video absolute inset-0 w-full h-full object-cover"
+          style={{
+            willChange: "transform, opacity",
+            filter: "grayscale(0.05) contrast(1.05) brightness(0.98) saturate(1.05)",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.9, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden="true"
+        >
+          <source src={slide.media.src} type="video/mp4" />
+        </motion.video>
+      </AnimatePresence>
 
       {/* Lighter navy scrim — still grounds the top/bottom readout bars and
           keeps text legible, but the footage reads through clearly now */}
@@ -119,6 +207,10 @@ function Hero() {
         .jw-mono { font-family: 'IBM Plex Mono', monospace; }
         .jw-display { font-family: 'Space Grotesk', sans-serif; }
         .jw-body { font-family: 'Inter', sans-serif; }
+        .jw-sr-only {
+          position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+          overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+        }
 
         @keyframes pulseDot {
           0%, 100% { opacity: 1; }
@@ -221,6 +313,40 @@ function Hero() {
           border-left: 1px solid rgba(244,246,249,0.12);
         }
 
+        /* Carousel controls */
+        .jw-carousel-arrow {
+          width: 40px;
+          height: 40px;
+          border-radius: 9999px;
+          border: 1.5px solid rgba(244,246,249,0.25);
+          color: rgba(244,246,249,0.8);
+          background: rgba(7,12,22,0.35);
+          backdrop-filter: blur(4px);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+        .jw-carousel-arrow:hover {
+          border-color: #3B6EF6;
+          color: #F4F6F9;
+          background: rgba(59,110,246,0.18);
+        }
+        .jw-carousel-arrow:active { transform: scale(0.94); }
+
+        .jw-carousel-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 9999px;
+          background: rgba(244,246,249,0.3);
+          transition: width 0.25s ease, background 0.25s ease;
+        }
+        .jw-carousel-dot[data-active="true"] {
+          width: 24px;
+          background: #3B6EF6;
+        }
+        .jw-carousel-dot:hover { background: rgba(244,246,249,0.55); }
+
         @keyframes ticker {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -294,6 +420,27 @@ function Hero() {
         </motion.a>
       </div>
 
+      {/* Carousel arrows */}
+      <button
+        onClick={prevSlide}
+        aria-label="Previous slide"
+        className="jw-carousel-arrow absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20"
+      >
+        ‹
+      </button>
+      <button
+        onClick={nextSlide}
+        aria-label="Next slide"
+        className="jw-carousel-arrow absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20"
+      >
+        ›
+      </button>
+
+      {/* Screen-reader announcement of the current slide */}
+      <span className="jw-sr-only" aria-live="polite">
+        {`Slide ${currentSlide + 1} of ${SLIDES.length}: ${slide.eyebrow}`}
+      </span>
+
       {/* Main content */}
       <motion.div
         variants={container}
@@ -302,46 +449,67 @@ function Hero() {
         className="relative z-10 flex min-h-screen flex-col justify-center px-6 md:px-16 pt-24 pb-32"
       >
         <div className="max-w-3xl mx-auto text-center">
-          <motion.span
-            variants={item}
-            className="jw-mono inline-block text-[11px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full border mb-6"
-            style={{ borderColor: "rgba(59,110,246,0.4)", color: "#7C9CFF" }}
-          >
-            Enterprise IT Partner
-          </motion.span>
-
-          <motion.h1
-            variants={item}
-            className="jw-display text-[2.4rem] sm:text-5xl md:text-[4.25rem] leading-[1.05] tracking-tight text-white"
-            style={{ textShadow: "0 2px 24px rgba(7,12,22,0.55)" }}
-          >
-            <span className="font-medium" style={{ color: "#9AA3AD" }}>
-              Enterprise technology, delivered with
-            </span>{" "}
-            <span className="font-bold" style={{ color: "#F4F6F9" }}>
-              precision and{" "}
-              <span style={{ color: "#3B6EF6" }}>scale.</span>
-            </span>
-          </motion.h1>
-
-          <motion.p
-            variants={item}
-            className="jw-body mt-6 max-w-xl mx-auto text-base md:text-lg leading-relaxed font-light"
-            style={{ color: "rgba(230,233,238,0.7)", textShadow: "0 2px 16px rgba(7,12,22,0.5)" }}
-          >
-            <span className="jw-brand-gradient">JASWISYS TECHNOLOGIES</span> deliver top-notch IT software services, backed by experienced professionals, to help businesses thrive.
-          </motion.p>
-
-          <motion.div variants={item} className="mt-6 flex flex-wrap justify-center gap-2.5">
-            {SERVICES.map((service) => (
+          {/* Slide-specific: eyebrow, headline, subcopy — crossfades per slide */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
               <span
-                key={service}
-                className="jw-mono jw-pill text-[11px] tracking-[0.05em] uppercase px-3 py-1.5 rounded-full"
+                className="jw-mono inline-block text-[11px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full border mb-6"
+                style={{ borderColor: "rgba(59,110,246,0.4)", color: "#7C9CFF" }}
               >
-                {service}
+                {slide.eyebrow}
               </span>
-            ))}
-          </motion.div>
+
+              <h1
+                className="jw-display text-[2.4rem] sm:text-5xl md:text-[4.25rem] leading-[1.05] tracking-tight text-white"
+                style={{ textShadow: "0 2px 24px rgba(7,12,22,0.55)" }}
+              >
+                <span className="font-medium" style={{ color: "#9AA3AD" }}>
+                  {slide.headlineLead}
+                </span>{" "}
+                <span className="font-bold" style={{ color: "#F4F6F9" }}>
+                  {slide.headlineBold}{" "}
+                  <span style={{ color: "#3B6EF6" }}>{slide.headlineAccent}</span>
+                </span>
+              </h1>
+
+              <p
+                className="jw-body mt-6 max-w-xl mx-auto text-base md:text-lg leading-relaxed font-light"
+                style={{ color: "rgba(230,233,238,0.7)", textShadow: "0 2px 16px rgba(7,12,22,0.5)" }}
+              >
+                <span className="jw-brand-gradient">JASWISYS TECHNOLOGIES</span>
+                {slide.subcopy}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Persistent across slides: CTAs, stats. Capability pills are conditional. */}
+          <AnimatePresence mode="wait">
+            {slide.showCapabilityPills && (
+              <motion.div
+                key="capability-pills"
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-6 flex flex-wrap justify-center gap-2.5"
+              >
+                {SERVICES.map((service) => (
+                  <span
+                    key={service}
+                    className="jw-mono jw-pill text-[11px] tracking-[0.05em] uppercase px-3 py-1.5 rounded-full"
+                  >
+                    {service}
+                  </span>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <motion.div variants={item} className="mt-9 flex flex-col sm:flex-row justify-center gap-4">
             <button
@@ -394,6 +562,20 @@ function Hero() {
                   {label}
                 </div>
               </div>
+            ))}
+          </motion.div>
+
+          {/* Slide dots */}
+          <motion.div variants={item} className="mt-8 flex items-center justify-center gap-2">
+            {SLIDES.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => goToSlide(i)}
+                data-active={i === currentSlide}
+                className="jw-carousel-dot"
+                aria-label={`Go to slide ${i + 1}: ${s.eyebrow}`}
+                aria-current={i === currentSlide}
+              />
             ))}
           </motion.div>
         </div>
